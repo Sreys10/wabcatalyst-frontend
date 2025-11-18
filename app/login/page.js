@@ -19,6 +19,7 @@ export default function LoginPage() {
     e.preventDefault();
     setError("");
     setLoading(true);
+    const shouldRedirectToProfile = isSignUp;
 
     try {
       if (isSignUp) {
@@ -42,7 +43,8 @@ export default function LoginPage() {
       if (result?.error) {
         setError(result.error);
       } else if (result?.ok) {
-        router.push("/");
+        const destination = shouldRedirectToProfile ? "/profile/create" : "/";
+        router.push(destination);
         router.refresh();
       }
     } catch (err) {
@@ -79,7 +81,9 @@ export default function LoginPage() {
           <div className="mb-6">
             <button
               type="button"
-              onClick={() => signIn("google", { callbackUrl: "/" })}
+              onClick={() =>
+                signIn("google", { callbackUrl: isSignUp ? "/profile/create" : "/" })
+              }
               disabled={loading}
               className="w-full flex items-center justify-center gap-3 px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-semibold hover:bg-gray-50 dark:hover:bg-gray-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
