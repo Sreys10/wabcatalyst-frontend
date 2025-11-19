@@ -103,7 +103,7 @@ export default async function DashboardPage() {
               Dashboard
             </h1>
             <p className="mt-2 text-lg text-gray-600 dark:text-gray-400">
-              Welcome back, <span className="font-semibold text-orange-600">{greetingName}</span>. Here's what's happening today.
+              Welcome back, <span className="font-semibold text-orange-600">{greetingName}</span>. Here&apos;s what&apos;s happening today.
             </p>
           </div>
           <div className="flex gap-3">
@@ -215,15 +215,15 @@ export default async function DashboardPage() {
                   <div
                     key={index}
                     className={`flex items-center justify-between rounded-2xl border p-4 transition-all ${item.done
-                        ? "border-gray-100 bg-gray-50/50 opacity-60 dark:border-gray-800 dark:bg-gray-800/50"
-                        : "border-orange-100 bg-orange-50/30 dark:border-orange-900/30 dark:bg-orange-900/10"
+                      ? "border-gray-100 bg-gray-50/50 opacity-60 dark:border-gray-800 dark:bg-gray-800/50"
+                      : "border-orange-100 bg-orange-50/30 dark:border-orange-900/30 dark:bg-orange-900/10"
                       }`}
                   >
                     <div className="flex items-center gap-4">
                       <div
                         className={`flex h-8 w-8 items-center justify-center rounded-full ${item.done
-                            ? "bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400"
-                            : "bg-orange-100 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400"
+                          ? "bg-green-100 text-green-600 dark:bg-green-900/30 dark:text-green-400"
+                          : "bg-orange-100 text-orange-600 dark:bg-orange-900/30 dark:text-orange-400"
                           }`}
                       >
                         {item.done ? (
