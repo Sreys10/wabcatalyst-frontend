@@ -197,7 +197,10 @@ export default function ProfileCreatePage() {
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
 
+  const [mounted, setMounted] = useState(false);
+
   useEffect(() => {
+    setMounted(true);
     if (typeof window === "undefined") return;
     const savedDraft = window.localStorage.getItem(localStorageKey);
     if (savedDraft) {
@@ -1206,7 +1209,7 @@ export default function ProfileCreatePage() {
     </div>
   );
 
-  if (status === "loading") {
+  if (!mounted || status === "loading") {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gray-50">
         <p className="text-gray-600">Loading...</p>
