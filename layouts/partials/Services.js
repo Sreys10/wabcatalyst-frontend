@@ -12,7 +12,7 @@ const Services = ({ services }) => {
     return (
       <section
         key={`service-${index}`}
-        className={`section ${isOdd && "bg-theme-light"}`}
+        className={`section ${isOdd && "bg-theme-light dark:bg-gray-800"}`}
       >
         <div className="container">
           <div className="items-center gap-8 md:grid md:grid-cols-2">

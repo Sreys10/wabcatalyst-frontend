@@ -21,10 +21,10 @@ function Pricing({ data }) {
                 <div className="card text-center">
                   <h4>{plan.title}</h4>
                   <div className="mt-5">
-                    <span className="text-5xl text-dark">${plan.price}</span>
+                    <span className="text-5xl text-dark dark:text-gray-100">${plan.price}</span>
                     <span>/ {plan.type}</span>
                   </div>
-                  <h5 className="mt-2 font-normal text-text">
+                  <h5 className="mt-2 font-normal text-text dark:text-gray-300">
                     {plan.subtitle}
                   </h5>
                   <ul className="mt-5">

@@ -10,7 +10,7 @@ const Footer = () => {
   const { copyright, footer_content } = config.params;
   const { footer } = menu;
   return (
-    <footer className="section bg-theme-light pb-0">
+    <footer className="section bg-theme-light dark:bg-gray-800 pb-0">
       <div className="container">
         {/* footer menu */}
         <div className="row">
@@ -21,7 +21,7 @@ const Footer = () => {
                 <ul className="mt-6">
                   {col?.menu.map((item) => (
                     <li className="mb-1" key={item.text}>
-                      <Link href={item.url} rel="">
+                      <Link href={item.url} rel="" className="text-text dark:text-gray-300 hover:text-primary">
                         {item.text}
                       </Link>
                     </li>
@@ -40,13 +40,13 @@ const Footer = () => {
                 alt=""
               />
             </Link>
-            {markdownify(footer_content, "p", "mt-3 mb-6")}
+            {markdownify(footer_content, "p", "mt-3 mb-6 text-text dark:text-gray-300")}
             <Social source={social} className="social-icons mb-8" />
           </div>
         </div>
         {/* copyright */}
-        <div className="border-t border-border py-6">
-          {markdownify(copyright, "p", "text-sm text-center")}
+        <div className="border-t border-border dark:border-gray-700 py-6">
+          {markdownify(copyright, "p", "text-sm text-center text-text dark:text-gray-300")}
         </div>
       </div>
     </footer>

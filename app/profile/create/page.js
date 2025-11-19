@@ -115,13 +115,13 @@ function StepIndicator({ current }) {
 
   return (
     <div className="mb-8">
-      <div className="flex items-center justify-between text-sm font-medium text-gray-600">
+      <div className="flex items-center justify-between text-sm font-medium text-gray-600 dark:text-gray-400">
         <span>
           Step {current + 1} of {steps.length}
         </span>
         <span>{steps[current].title}</span>
       </div>
-      <div className="mt-3 h-2 rounded-full bg-gray-200">
+      <div className="mt-3 h-2 rounded-full bg-gray-200 dark:bg-gray-700">
         <div
           className="h-2 rounded-full bg-orange-500 transition-all duration-300"
           style={{ width: `${progress}%` }}
@@ -145,8 +145,8 @@ function MultiValueInput({ label, values, onRemove, onAdd, placeholder }) {
 
   return (
     <div className="space-y-2">
-      <label className="block text-sm font-semibold text-gray-700">{label}</label>
-      <div className="flex flex-wrap gap-2 rounded-xl border border-gray-200 bg-white p-3 shadow-sm">
+      <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">{label}</label>
+      <div className="flex flex-wrap gap-2 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-3 shadow-sm">
         {values.map((value, index) => (
           <span
             key={`${value}-${index}`}
@@ -168,20 +168,20 @@ function MultiValueInput({ label, values, onRemove, onAdd, placeholder }) {
           onChange={(event) => setInput(event.target.value)}
           onKeyDown={handleKeyDown}
           placeholder={placeholder}
-          className="flex-1 border-none bg-transparent text-sm focus:outline-none"
+          className="flex-1 border-none bg-transparent text-sm text-gray-900 dark:text-gray-100 focus:outline-none"
         />
       </div>
-      <p className="text-xs text-gray-500">Press Enter to add</p>
+      <p className="text-xs text-gray-500 dark:text-gray-400">Press Enter to add</p>
     </div>
   );
 }
 
 function SectionCard({ title, description, children }) {
   return (
-    <section className="rounded-3xl border border-gray-100 bg-white p-6 shadow-sm ring-1 ring-black/5">
+    <section className="rounded-3xl border border-gray-100 dark:border-gray-700 bg-white dark:bg-gray-800 p-6 shadow-sm ring-1 ring-black/5 dark:ring-gray-700/50">
       <div className="mb-6 space-y-1">
-        <h2 className="text-xl font-semibold text-gray-900">{title}</h2>
-        {description && <p className="text-sm text-gray-500">{description}</p>}
+        <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">{title}</h2>
+        {description && <p className="text-sm text-gray-500 dark:text-gray-400">{description}</p>}
       </div>
       <div className="space-y-6">{children}</div>
     </section>
@@ -434,7 +434,7 @@ export default function ProfileCreatePage() {
 
   const renderArrayTextarea = (label, value, onChange, placeholder) => (
     <div className="space-y-2">
-      <label className="block text-sm font-semibold text-gray-700">{label}</label>
+      <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">{label}</label>
       <textarea
         value={value.join("\n")}
         onChange={(event) =>
@@ -442,9 +442,9 @@ export default function ProfileCreatePage() {
         }
         rows={4}
         placeholder={placeholder}
-        className="w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm shadow-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+        className="w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm shadow-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
       />
-      <p className="text-xs text-gray-500">Separate each entry on a new line.</p>
+      <p className="text-xs text-gray-500 dark:text-gray-400">Separate each entry on a new line.</p>
     </div>
   );
 
@@ -454,9 +454,9 @@ export default function ProfileCreatePage() {
       description="Add detailed information about each role you have held."
     >
       {formData.workExperience.map((experience, index) => (
-        <div key={`experience-${index}`} className="rounded-2xl border border-gray-100 p-4">
+        <div key={`experience-${index}`} className="rounded-2xl border border-gray-100 dark:border-gray-700 p-4">
           <div className="flex items-center justify-between pb-4">
-            <p className="text-sm font-semibold text-gray-700">
+            <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">
               Experience {index + 1}
             </p>
             {formData.workExperience.length > 1 && (
@@ -471,29 +471,29 @@ export default function ProfileCreatePage() {
           </div>
           <div className="grid gap-4 md:grid-cols-2">
             <div>
-              <label className="text-sm font-semibold text-gray-700">Job Title</label>
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Job Title</label>
               <input
                 type="text"
                 value={experience.jobTitle}
                 onChange={(event) =>
                   handleExperienceChange(index, "jobTitle", event.target.value)
                 }
-                className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+                className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
               />
             </div>
             <div>
-              <label className="text-sm font-semibold text-gray-700">Company Name</label>
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Company Name</label>
               <input
                 type="text"
                 value={experience.companyName}
                 onChange={(event) =>
                   handleExperienceChange(index, "companyName", event.target.value)
                 }
-                className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+                className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
               />
             </div>
             <div>
-              <label className="text-sm font-semibold text-gray-700">Employment Type</label>
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Employment Type</label>
               <input
                 type="text"
                 value={experience.employmentType}
@@ -501,23 +501,23 @@ export default function ProfileCreatePage() {
                   handleExperienceChange(index, "employmentType", event.target.value)
                 }
                 placeholder="Full-time, Contract, Internship..."
-                className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+                className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="text-sm font-semibold text-gray-700">Start Date</label>
+                <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Start Date</label>
                 <input
                   type="month"
                   value={experience.startDate}
                   onChange={(event) =>
                     handleExperienceChange(index, "startDate", event.target.value)
                   }
-                  className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+                  className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
                 />
               </div>
               <div>
-                <label className="text-sm font-semibold text-gray-700">End Date</label>
+                <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">End Date</label>
                 <input
                   type="month"
                   value={experience.endDate}
@@ -525,12 +525,12 @@ export default function ProfileCreatePage() {
                     handleExperienceChange(index, "endDate", event.target.value)
                   }
                   disabled={experience.isCurrentJob}
-                  className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 disabled:cursor-not-allowed disabled:bg-gray-100"
+                  className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900 disabled:cursor-not-allowed disabled:bg-gray-100 dark:disabled:bg-gray-700"
                 />
               </div>
             </div>
             <div>
-              <label className="text-sm font-semibold text-gray-700">Location</label>
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Location</label>
               <input
                 type="text"
                 value={experience.location}
@@ -538,7 +538,7 @@ export default function ProfileCreatePage() {
                   handleExperienceChange(index, "location", event.target.value)
                 }
                 placeholder="City, Country"
-                className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+                className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
               />
             </div>
             <div className="flex items-center gap-2">
@@ -549,11 +549,11 @@ export default function ProfileCreatePage() {
                 onChange={(event) =>
                   handleExperienceChange(index, "isCurrentJob", event.target.checked)
                 }
-                className="h-4 w-4 rounded border-gray-300 text-orange-500 focus:ring-orange-400"
+                className="h-4 w-4 rounded border-gray-300 dark:border-gray-600 text-orange-500 focus:ring-orange-400"
               />
               <label
                 htmlFor={`current-job-${index}`}
-                className="text-sm font-semibold text-gray-700"
+                className="text-sm font-semibold text-gray-700 dark:text-gray-300"
               >
                 This is my current job
               </label>
@@ -578,7 +578,7 @@ export default function ProfileCreatePage() {
       <button
         type="button"
         onClick={() => addEntry("workExperience", getEmptyExperience)}
-        className="w-full rounded-2xl border border-dashed border-gray-300 px-4 py-3 text-sm font-semibold text-orange-600 transition hover:border-orange-400 hover:bg-orange-50"
+        className="w-full rounded-2xl border border-dashed border-gray-300 dark:border-gray-600 px-4 py-3 text-sm font-semibold text-orange-600 dark:text-orange-400 transition hover:border-orange-400 dark:hover:border-orange-500 hover:bg-orange-50 dark:hover:bg-orange-900/20"
       >
         + Add Another Experience
       </button>
@@ -588,9 +588,9 @@ export default function ProfileCreatePage() {
   const renderEducationSection = () => (
     <SectionCard title="Education" description="Add your academic background.">
       {formData.education.map((item, index) => (
-        <div key={`education-${index}`} className="rounded-2xl border border-gray-100 p-4">
+        <div key={`education-${index}`} className="rounded-2xl border border-gray-100 dark:border-gray-700 p-4">
           <div className="flex items-center justify-between pb-4">
-            <p className="text-sm font-semibold text-gray-700">Education {index + 1}</p>
+            <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">Education {index + 1}</p>
             {formData.education.length > 1 && (
               <button
                 type="button"
@@ -603,27 +603,27 @@ export default function ProfileCreatePage() {
           </div>
           <div className="grid gap-4 md:grid-cols-2">
             <div>
-              <label className="text-sm font-semibold text-gray-700">Degree</label>
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Degree</label>
               <input
                 type="text"
                 value={item.degree}
                 onChange={(event) => handleEducationChange(index, "degree", event.target.value)}
-                className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+                className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
               />
             </div>
             <div>
-              <label className="text-sm font-semibold text-gray-700">Institution</label>
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Institution</label>
               <input
                 type="text"
                 value={item.institution}
                 onChange={(event) =>
                   handleEducationChange(index, "institution", event.target.value)
                 }
-                className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+                className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
               />
             </div>
             <div>
-              <label className="text-sm font-semibold text-gray-700">Start Year</label>
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Start Year</label>
               <input
                 type="text"
                 value={item.startYear}
@@ -631,41 +631,41 @@ export default function ProfileCreatePage() {
                   handleEducationChange(index, "startYear", event.target.value)
                 }
                 placeholder="e.g. 2018"
-                className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+                className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
               />
             </div>
             <div>
-              <label className="text-sm font-semibold text-gray-700">End Year</label>
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">End Year</label>
               <input
                 type="text"
                 value={item.endYear}
                 onChange={(event) => handleEducationChange(index, "endYear", event.target.value)}
                 placeholder="e.g. 2022"
-                className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+                className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
               />
             </div>
           </div>
           <div className="mt-4 grid gap-4 md:grid-cols-2">
             <div>
-              <label className="text-sm font-semibold text-gray-700">CGPA / Percentage</label>
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">CGPA / Percentage</label>
               <input
                 type="text"
                 value={item.cgpaOrPercentage}
                 onChange={(event) =>
                   handleEducationChange(index, "cgpaOrPercentage", event.target.value)
                 }
-                className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+                className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
               />
             </div>
             <div>
-              <label className="text-sm font-semibold text-gray-700">Specialization</label>
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Specialization</label>
               <input
                 type="text"
                 value={item.specialization}
                 onChange={(event) =>
                   handleEducationChange(index, "specialization", event.target.value)
                 }
-                className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+                className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
               />
             </div>
           </div>
@@ -674,7 +674,7 @@ export default function ProfileCreatePage() {
       <button
         type="button"
         onClick={() => addEntry("education", getEmptyEducation)}
-        className="w-full rounded-2xl border border-dashed border-gray-300 px-4 py-3 text-sm font-semibold text-orange-600 transition hover:border-orange-400 hover:bg-orange-50"
+        className="w-full rounded-2xl border border-dashed border-gray-300 dark:border-gray-600 px-4 py-3 text-sm font-semibold text-orange-600 dark:text-orange-400 transition hover:border-orange-400 dark:hover:border-orange-500 hover:bg-orange-50 dark:hover:bg-orange-900/20"
       >
         + Add Another Education
       </button>
@@ -684,9 +684,9 @@ export default function ProfileCreatePage() {
   const renderProjectsSection = () => (
     <SectionCard title="Projects" description="Highlight the projects you’re proud of.">
       {formData.projects.map((project, index) => (
-        <div key={`project-${index}`} className="rounded-2xl border border-gray-100 p-4">
+        <div key={`project-${index}`} className="rounded-2xl border border-gray-100 dark:border-gray-700 p-4">
           <div className="flex items-center justify-between pb-4">
-            <p className="text-sm font-semibold text-gray-700">Project {index + 1}</p>
+            <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">Project {index + 1}</p>
             {formData.projects.length > 1 && (
               <button
                 type="button"
@@ -699,35 +699,35 @@ export default function ProfileCreatePage() {
           </div>
           <div className="grid gap-4 md:grid-cols-2">
             <div>
-              <label className="text-sm font-semibold text-gray-700">Project Title</label>
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Project Title</label>
               <input
                 type="text"
                 value={project.projectTitle}
                 onChange={(event) =>
                   handleProjectChange(index, "projectTitle", event.target.value)
                 }
-                className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+                className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
               />
             </div>
             <div>
-              <label className="text-sm font-semibold text-gray-700">Role</label>
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Role</label>
               <input
                 type="text"
                 value={project.role}
                 onChange={(event) => handleProjectChange(index, "role", event.target.value)}
-                className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+                className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
               />
             </div>
           </div>
           <div className="mt-4">
-            <label className="text-sm font-semibold text-gray-700">Description</label>
+            <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Description</label>
             <textarea
               rows={3}
               value={project.description}
               onChange={(event) =>
                 handleProjectChange(index, "description", event.target.value)
               }
-              className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm shadow-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+              className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm shadow-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
             />
           </div>
           <div className="mt-4">
@@ -739,7 +739,7 @@ export default function ProfileCreatePage() {
             )}
           </div>
           <div className="mt-4">
-            <label className="text-sm font-semibold text-gray-700">Project Link</label>
+            <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Project Link</label>
             <input
               type="url"
               value={project.projectLink}
@@ -747,7 +747,7 @@ export default function ProfileCreatePage() {
                 handleProjectChange(index, "projectLink", event.target.value)
               }
               placeholder="https://"
-              className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+              className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
             />
           </div>
         </div>
@@ -755,7 +755,7 @@ export default function ProfileCreatePage() {
       <button
         type="button"
         onClick={() => addEntry("projects", getEmptyProject)}
-        className="w-full rounded-2xl border border-dashed border-gray-300 px-4 py-3 text-sm font-semibold text-orange-600 transition hover:border-orange-400 hover:bg-orange-50"
+        className="w-full rounded-2xl border border-dashed border-gray-300 dark:border-gray-600 px-4 py-3 text-sm font-semibold text-orange-600 dark:text-orange-400 transition hover:border-orange-400 dark:hover:border-orange-500 hover:bg-orange-50 dark:hover:bg-orange-900/20"
       >
         + Add Another Project
       </button>
@@ -765,9 +765,9 @@ export default function ProfileCreatePage() {
   const renderCertificationsSection = () => (
     <SectionCard title="Certifications" description="Showcase any certifications.">
       {formData.certifications.map((certification, index) => (
-        <div key={`cert-${index}`} className="rounded-2xl border border-gray-100 p-4">
+        <div key={`cert-${index}`} className="rounded-2xl border border-gray-100 dark:border-gray-700 p-4">
           <div className="flex items-center justify-between pb-4">
-            <p className="text-sm font-semibold text-gray-700">
+            <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">
               Certification {index + 1}
             </p>
             {formData.certifications.length > 1 && (
@@ -782,29 +782,29 @@ export default function ProfileCreatePage() {
           </div>
           <div className="grid gap-4 md:grid-cols-2">
             <div>
-              <label className="text-sm font-semibold text-gray-700">Title</label>
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Title</label>
               <input
                 type="text"
                 value={certification.title}
                 onChange={(event) =>
                   handleCertificationChange(index, "title", event.target.value)
                 }
-                className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+                className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
               />
             </div>
             <div>
-              <label className="text-sm font-semibold text-gray-700">Issuer</label>
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Issuer</label>
               <input
                 type="text"
                 value={certification.issuer}
                 onChange={(event) =>
                   handleCertificationChange(index, "issuer", event.target.value)
                 }
-                className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+                className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
               />
             </div>
             <div>
-              <label className="text-sm font-semibold text-gray-700">Completion Year</label>
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Completion Year</label>
               <input
                 type="text"
                 value={certification.completionYear}
@@ -812,11 +812,11 @@ export default function ProfileCreatePage() {
                   handleCertificationChange(index, "completionYear", event.target.value)
                 }
                 placeholder="e.g. 2024"
-                className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+                className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
               />
             </div>
             <div>
-              <label className="text-sm font-semibold text-gray-700">Certificate Link</label>
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Certificate Link</label>
               <input
                 type="url"
                 value={certification.certificateLink}
@@ -824,7 +824,7 @@ export default function ProfileCreatePage() {
                   handleCertificationChange(index, "certificateLink", event.target.value)
                 }
                 placeholder="https://"
-                className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+                className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
               />
             </div>
           </div>
@@ -833,7 +833,7 @@ export default function ProfileCreatePage() {
       <button
         type="button"
         onClick={() => addEntry("certifications", getEmptyCertification)}
-        className="w-full rounded-2xl border border-dashed border-gray-300 px-4 py-3 text-sm font-semibold text-orange-600 transition hover:border-orange-400 hover:bg-orange-50"
+        className="w-full rounded-2xl border border-dashed border-gray-300 dark:border-gray-600 px-4 py-3 text-sm font-semibold text-orange-600 dark:text-orange-400 transition hover:border-orange-400 dark:hover:border-orange-500 hover:bg-orange-50 dark:hover:bg-orange-900/20"
       >
         + Add Another Certification
       </button>
@@ -843,9 +843,9 @@ export default function ProfileCreatePage() {
   const renderLanguagesSection = () => (
     <SectionCard title="Languages" description="List the languages you know.">
       {formData.languages.map((language, index) => (
-        <div key={`language-${index}`} className="rounded-2xl border border-gray-100 p-4">
+        <div key={`language-${index}`} className="rounded-2xl border border-gray-100 dark:border-gray-700 p-4">
           <div className="flex items-center justify-between pb-4">
-            <p className="text-sm font-semibold text-gray-700">Language {index + 1}</p>
+            <p className="text-sm font-semibold text-gray-700 dark:text-gray-300">Language {index + 1}</p>
             {formData.languages.length > 1 && (
               <button
                 type="button"
@@ -858,24 +858,24 @@ export default function ProfileCreatePage() {
           </div>
           <div className="grid gap-4 md:grid-cols-2">
             <div>
-              <label className="text-sm font-semibold text-gray-700">Language</label>
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Language</label>
               <input
                 type="text"
                 value={language.languageName}
                 onChange={(event) =>
                   handleLanguageChange(index, "languageName", event.target.value)
                 }
-                className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+                className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
               />
             </div>
             <div>
-              <label className="text-sm font-semibold text-gray-700">Proficiency</label>
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Proficiency</label>
               <select
                 value={language.proficiency}
                 onChange={(event) =>
                   handleLanguageChange(index, "proficiency", event.target.value)
                 }
-                className="mt-1 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+                className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
               >
                 <option value="Basic">Basic</option>
                 <option value="Intermediate">Intermediate</option>
@@ -888,7 +888,7 @@ export default function ProfileCreatePage() {
       <button
         type="button"
         onClick={() => addEntry("languages", getEmptyLanguage)}
-        className="w-full rounded-2xl border border-dashed border-gray-300 px-4 py-3 text-sm font-semibold text-orange-600 transition hover:border-orange-400 hover:bg-orange-50"
+        className="w-full rounded-2xl border border-dashed border-gray-300 dark:border-gray-600 px-4 py-3 text-sm font-semibold text-orange-600 dark:text-orange-400 transition hover:border-orange-400 dark:hover:border-orange-500 hover:bg-orange-50 dark:hover:bg-orange-900/20"
       >
         + Add Another Language
       </button>
@@ -944,76 +944,76 @@ export default function ProfileCreatePage() {
     >
       <div className="grid gap-4 md:grid-cols-2">
         <div>
-          <label className="text-sm font-semibold text-gray-700">Full Name *</label>
+          <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Full Name *</label>
           <input
             type="text"
             value={formData.fullName}
             onChange={(event) => handleInputChange("fullName", event.target.value)}
-            className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm shadow-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+            className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm shadow-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
           />
         </div>
         <div>
-          <label className="text-sm font-semibold text-gray-700">Email *</label>
+          <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Email *</label>
           <input
             type="email"
             value={formData.email}
             readOnly
-            className="mt-1 w-full cursor-not-allowed rounded-2xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm"
+            className="mt-1 w-full cursor-not-allowed rounded-2xl border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm"
           />
-          <p className="mt-1 text-xs text-gray-500">Prefilled from your account.</p>
+          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">Prefilled from your account.</p>
         </div>
         <div>
-          <label className="text-sm font-semibold text-gray-700">Phone *</label>
+          <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Phone *</label>
           <input
             type="text"
             value={formData.phone}
             onChange={(event) => handleInputChange("phone", event.target.value)}
-            className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm shadow-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+            className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm shadow-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
           />
         </div>
         <div>
-          <label className="text-sm font-semibold text-gray-700">Location</label>
+          <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Location</label>
           <input
             type="text"
             value={formData.location}
             onChange={(event) => handleInputChange("location", event.target.value)}
             placeholder="City, Country"
-            className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm shadow-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+            className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm shadow-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
           />
         </div>
         <div>
-          <label className="text-sm font-semibold text-gray-700">LinkedIn</label>
+          <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">LinkedIn</label>
           <input
             type="url"
             value={formData.linkedIn}
             onChange={(event) => handleInputChange("linkedIn", event.target.value)}
             placeholder="https://linkedin.com/in/username"
-            className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm shadow-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+            className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm shadow-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
           />
         </div>
         <div>
-          <label className="text-sm font-semibold text-gray-700">Portfolio</label>
+          <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Portfolio</label>
           <input
             type="url"
             value={formData.portfolio}
             onChange={(event) => handleInputChange("portfolio", event.target.value)}
             placeholder="https://your-portfolio.com"
-            className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm shadow-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+            className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm shadow-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
           />
         </div>
         <div>
-          <label className="text-sm font-semibold text-gray-700">GitHub</label>
+          <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">GitHub</label>
           <input
             type="url"
             value={formData.github}
             onChange={(event) => handleInputChange("github", event.target.value)}
             placeholder="https://github.com/username"
-            className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm shadow-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+            className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm shadow-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
           />
         </div>
       </div>
       <div className="mt-4">
-        <label className="text-sm font-semibold text-gray-700">Profile Image</label>
+        <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Profile Image</label>
         <div className="mt-2 flex items-center gap-4">
           {formData.profileImage && (
             <Image
@@ -1025,7 +1025,7 @@ export default function ProfileCreatePage() {
               unoptimized
             />
           )}
-          <label className="inline-flex cursor-pointer items-center justify-center rounded-2xl border border-dashed border-gray-300 px-6 py-3 text-sm font-semibold text-gray-700 transition hover:border-orange-400 hover:text-orange-600">
+          <label className="inline-flex cursor-pointer items-center justify-center rounded-2xl border border-dashed border-gray-300 dark:border-gray-600 px-6 py-3 text-sm font-semibold text-gray-700 dark:text-gray-300 transition hover:border-orange-400 hover:text-orange-600 dark:hover:text-orange-400">
             Upload Image
             <input
               type="file"
@@ -1055,17 +1055,17 @@ export default function ProfileCreatePage() {
     >
       <div className="space-y-4">
         <div>
-          <label className="text-sm font-semibold text-gray-700">Career Objective *</label>
+          <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Career Objective *</label>
           <textarea
             rows={4}
             value={formData.careerObjective}
             onChange={(event) => handleInputChange("careerObjective", event.target.value)}
-            placeholder="Share your career goals and what you’re looking for."
-            className="mt-2 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm shadow-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+            placeholder="Share your career goals and what you're looking for."
+            className="mt-2 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm shadow-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
           />
         </div>
         <div>
-          <label className="text-sm font-semibold text-gray-700">Professional Summary</label>
+          <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Professional Summary</label>
           <textarea
             rows={5}
             value={formData.professionalSummary}
@@ -1073,7 +1073,7 @@ export default function ProfileCreatePage() {
               handleInputChange("professionalSummary", event.target.value)
             }
             placeholder="Highlight key achievements, experience, and impact."
-            className="mt-2 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm shadow-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+            className="mt-2 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm shadow-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
           />
         </div>
       </div>
@@ -1084,30 +1084,30 @@ export default function ProfileCreatePage() {
     <SectionCard title="Job Preferences" description="Help us match you with the right roles.">
       <div className="grid gap-4 md:grid-cols-2">
         <div>
-          <label className="text-sm font-semibold text-gray-700">Preferred Job Role *</label>
+          <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Preferred Job Role *</label>
           <input
             type="text"
             value={formData.preferredJobRole}
             onChange={(event) => handleInputChange("preferredJobRole", event.target.value)}
-            className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+            className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
           />
         </div>
         <div>
-          <label className="text-sm font-semibold text-gray-700">Preferred Location</label>
+          <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Preferred Location</label>
           <input
             type="text"
             value={formData.preferredLocation}
             onChange={(event) => handleInputChange("preferredLocation", event.target.value)}
             placeholder="Remote, Bengaluru, etc."
-            className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+            className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
           />
         </div>
         <div>
-          <label className="text-sm font-semibold text-gray-700">Job Type *</label>
+          <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Job Type *</label>
           <select
             value={formData.jobType}
             onChange={(event) => handleInputChange("jobType", event.target.value)}
-            className="mt-1 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+            className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
           >
             <option value="Remote">Remote</option>
             <option value="Onsite">Onsite</option>
@@ -1115,33 +1115,33 @@ export default function ProfileCreatePage() {
           </select>
         </div>
         <div>
-          <label className="text-sm font-semibold text-gray-700">Expected Salary</label>
+          <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Expected Salary</label>
           <input
             type="text"
             value={formData.expectedSalary}
             onChange={(event) => handleInputChange("expectedSalary", event.target.value)}
             placeholder="e.g. 15 LPA"
-            className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+            className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
           />
         </div>
         <div>
-          <label className="text-sm font-semibold text-gray-700">Years of Experience</label>
+          <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Years of Experience</label>
           <input
             type="text"
             value={formData.yearsOfExperience}
             onChange={(event) => handleInputChange("yearsOfExperience", event.target.value)}
             placeholder="e.g. 5+ years"
-            className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+            className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
           />
         </div>
         <div>
-          <label className="text-sm font-semibold text-gray-700">Notice Period</label>
+          <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Notice Period</label>
           <input
             type="text"
             value={formData.noticePeriod}
             onChange={(event) => handleInputChange("noticePeriod", event.target.value)}
             placeholder="Immediate / 30 days"
-            className="mt-1 w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100"
+            className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
           />
         </div>
       </div>
@@ -1169,7 +1169,7 @@ export default function ProfileCreatePage() {
         type="button"
         onClick={handleBack}
         disabled={currentStep === 0}
-        className="rounded-2xl border border-gray-300 px-6 py-3 text-sm font-semibold text-gray-600 transition hover:border-gray-400 disabled:cursor-not-allowed disabled:opacity-50"
+        className="rounded-2xl border border-gray-300 dark:border-gray-600 px-6 py-3 text-sm font-semibold text-gray-600 dark:text-gray-300 transition hover:border-gray-400 dark:hover:border-gray-500 disabled:cursor-not-allowed disabled:opacity-50"
       >
         Back
       </button>
@@ -1196,24 +1196,24 @@ export default function ProfileCreatePage() {
 
   if (status === "loading") {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50">
-        <p className="text-gray-600">Loading...</p>
+      <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
+        <p className="text-gray-600 dark:text-gray-400">Loading...</p>
       </div>
     );
   }
 
   if (success) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-white via-orange-50 to-amber-100">
+      <div className="min-h-screen bg-gradient-to-br from-white via-orange-50 to-amber-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <div className="mx-auto max-w-3xl px-4 py-24 text-center">
-          <div className="rounded-3xl bg-white p-12 shadow-xl">
+          <div className="rounded-3xl bg-white dark:bg-gray-800 p-12 shadow-xl">
             <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-green-100 text-green-600">
               ✓
             </div>
-            <h1 className="mt-6 text-3xl font-semibold text-gray-900">
+            <h1 className="mt-6 text-3xl font-semibold text-gray-900 dark:text-gray-100">
               Profile Completed Successfully!
             </h1>
-            <p className="mt-4 text-gray-600">
+            <p className="mt-4 text-gray-600 dark:text-gray-400">
               Your professional profile is now saved. We will use this data to generate an AI-powered
               resume tailored for you.
             </p>
@@ -1228,7 +1228,7 @@ export default function ProfileCreatePage() {
               <button
                 type="button"
                 onClick={() => router.push("/profile/create")}
-                className="rounded-2xl border border-gray-200 px-6 py-3 text-sm font-semibold text-gray-700 transition hover:border-gray-300"
+                className="rounded-2xl border border-gray-200 dark:border-gray-600 px-6 py-3 text-sm font-semibold text-gray-700 dark:text-gray-300 transition hover:border-gray-300 dark:hover:border-gray-500"
               >
                 Edit Profile Again
               </button>
@@ -1240,23 +1240,23 @@ export default function ProfileCreatePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50 py-12">
+    <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-amber-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-12">
       <div className="mx-auto max-w-4xl px-4">
         <div className="mb-10 text-center">
-          <p className="text-sm font-semibold uppercase tracking-wide text-orange-500">
+          <p className="text-sm font-semibold uppercase tracking-wide text-orange-500 dark:text-orange-400">
             Create Your Professional Profile
           </p>
-          <h1 className="mt-3 text-3xl font-semibold text-gray-900">
+          <h1 className="mt-3 text-3xl font-semibold text-gray-900 dark:text-gray-100">
             Let us craft the perfect story for your AI resume
           </h1>
-          <p className="mt-3 text-gray-600">
+          <p className="mt-3 text-gray-600 dark:text-gray-400">
             Provide detailed information about your experience and preferences. You can save and
             return anytime—your progress is auto-saved.
           </p>
         </div>
         <StepIndicator current={currentStep} />
         {error && (
-          <div className="mb-6 rounded-2xl border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-600">
+          <div className="mb-6 rounded-2xl border border-red-100 dark:border-red-900 bg-red-50 dark:bg-red-900/20 px-4 py-3 text-sm text-red-600 dark:text-red-400">
             {error}
           </div>
         )}
