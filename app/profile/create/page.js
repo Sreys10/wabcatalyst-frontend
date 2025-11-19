@@ -108,6 +108,72 @@ const multiValueFields = [
   { field: "publications", label: "Publications", placeholder: "Add a publication" },
 ];
 
+// Dropdown options
+const DEGREE_OPTIONS = [
+  "High School",
+  "Diploma",
+  "Associate Degree",
+  "Bachelor's Degree",
+  "Master's Degree",
+  "MBA",
+  "PhD",
+  "Doctorate",
+  "Post Graduate Diploma",
+  "Certificate",
+  "Other",
+];
+
+const EMPLOYMENT_TYPE_OPTIONS = [
+  "Full-time",
+  "Part-time",
+  "Contract",
+  "Internship",
+  "Freelance",
+  "Temporary",
+  "Volunteer",
+  "Other",
+];
+
+const YEARS_OF_EXPERIENCE_OPTIONS = [
+  "0-1 years",
+  "1-2 years",
+  "2-3 years",
+  "3-5 years",
+  "5-7 years",
+  "7-10 years",
+  "10-15 years",
+  "15+ years",
+];
+
+const NOTICE_PERIOD_OPTIONS = [
+  "Immediate",
+  "1 week",
+  "2 weeks",
+  "1 month",
+  "2 months",
+  "3 months",
+  "Negotiable",
+];
+
+const COMMON_SKILLS = [
+  // Technical Skills
+  "JavaScript", "Python", "Java", "C++", "C#", "React", "Node.js", "Angular", "Vue.js",
+  "TypeScript", "HTML", "CSS", "SQL", "MongoDB", "PostgreSQL", "AWS", "Docker", "Kubernetes",
+  "Git", "GitHub", "CI/CD", "REST API", "GraphQL", "Microservices", "Agile", "Scrum",
+  // Soft Skills
+  "Communication", "Leadership", "Teamwork", "Problem Solving", "Time Management",
+  "Critical Thinking", "Adaptability", "Creativity", "Collaboration", "Project Management",
+];
+
+const SPECIALIZATION_OPTIONS = [
+  "Computer Science", "Software Engineering", "Information Technology", "Data Science",
+  "Machine Learning", "Artificial Intelligence", "Cybersecurity", "Web Development",
+  "Mobile Development", "Cloud Computing", "DevOps", "Database Administration",
+  "Network Engineering", "Business Administration", "Finance", "Marketing",
+  "Human Resources", "Operations", "Supply Chain", "Engineering", "Mechanical Engineering",
+  "Electrical Engineering", "Civil Engineering", "Chemical Engineering", "Other",
+];
+
 const localStorageKey = "profileDraft";
 
 function StepIndicator({ current }) {
@@ -131,8 +197,25 @@ function StepIndicator({ current }) {
   );
 }
 
-function MultiValueInput({ label, values, onRemove, onAdd, placeholder }) {
+function MultiValueInput({ label, values, onRemove, onAdd, placeholder, suggestions = [] }) {
   const [input, setInput] = useState("");
+  const [showSuggestions, setShowSuggestions] = useState(false);
+  const [filteredSuggestions, setFilteredSuggestions] = useState([]);
+
+  const handleInputChange = (value) => {
+    setInput(value);
+    if (value.trim() && suggestions.length > 0) {
+      const filtered = suggestions.filter(
+        (suggestion) =>
+          suggestion.toLowerCase().includes(value.toLowerCase()) &&
+          !values.includes(suggestion)
+      );
+      setFilteredSuggestions(filtered.slice(0, 5));
+      setShowSuggestions(filtered.length > 0);
+    } else {
+      setShowSuggestions(false);
+    }
+  };
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter" || event.key === ",") {
@@ -140,38 +223,72 @@ function MultiValueInput({ label, values, onRemove, onAdd, placeholder }) {
       if (!input.trim()) return;
       onAdd(input.trim());
       setInput("");
+      setShowSuggestions(false);
+    } else if (event.key === "Escape") {
+      setShowSuggestions(false);
     }
   };
 
+  const handleSuggestionClick = (suggestion) => {
+    onAdd(suggestion);
+    setInput("");
+    setShowSuggestions(false);
+  };
+
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 relative">
       <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">{label}</label>
-      <div className="flex flex-wrap gap-2 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-3 shadow-sm">
-        {values.map((value, index) => (
-          <span
-            key={`${value}-${index}`}
-            className="inline-flex items-center gap-2 rounded-full bg-orange-100 px-3 py-1 text-sm text-orange-700"
-          >
-            {value}
-            <button
-              type="button"
-              onClick={() => onRemove(index)}
-              className="text-xs text-orange-500 transition hover:text-orange-700"
+      <div className="relative">
+        <div className="flex flex-wrap gap-2 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-3 shadow-sm">
+          {values.map((value, index) => (
+            <span
+              key={`${value}-${index}`}
+              className="inline-flex items-center gap-2 rounded-full bg-orange-100 dark:bg-orange-900/30 px-3 py-1 text-sm text-orange-700 dark:text-orange-300"
             >
-              ✕
-            </button>
-          </span>
-        ))}
-        <input
-          type="text"
-          value={input}
-          onChange={(event) => setInput(event.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder={placeholder}
-          className="flex-1 border-none bg-transparent text-sm text-gray-900 dark:text-gray-100 focus:outline-none"
-        />
+              {value}
+              <button
+                type="button"
+                onClick={() => onRemove(index)}
+                className="text-xs text-orange-500 dark:text-orange-400 transition hover:text-orange-700 dark:hover:text-orange-200"
+              >
+                ✕
+              </button>
+            </span>
+          ))}
+          <input
+            type="text"
+            value={input}
+            onChange={(event) => handleInputChange(event.target.value)}
+            onKeyDown={handleKeyDown}
+            onFocus={() => {
+              if (input.trim() && suggestions.length > 0) {
+                setShowSuggestions(true);
+              }
+            }}
+            onBlur={() => {
+              // Delay to allow click on suggestion
+              setTimeout(() => setShowSuggestions(false), 200);
+            }}
+            placeholder={placeholder}
+            className="flex-1 border-none bg-transparent text-sm text-gray-900 dark:text-gray-100 focus:outline-none"
+          />
+        </div>
+        {showSuggestions && filteredSuggestions.length > 0 && (
+          <div className="absolute z-10 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg max-h-48 overflow-y-auto">
+            {filteredSuggestions.map((suggestion, index) => (
+              <button
+                key={index}
+                type="button"
+                onClick={() => handleSuggestionClick(suggestion)}
+                className="w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+              >
+                {suggestion}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
-      <p className="text-xs text-gray-500 dark:text-gray-400">Press Enter to add</p>
+      <p className="text-xs text-gray-500 dark:text-gray-400">Press Enter to add • Type to see suggestions</p>
     </div>
   );
 }
@@ -494,15 +611,20 @@ export default function ProfileCreatePage() {
             </div>
             <div>
               <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Employment Type</label>
-              <input
-                type="text"
+              <select
                 value={experience.employmentType}
                 onChange={(event) =>
                   handleExperienceChange(index, "employmentType", event.target.value)
                 }
-                placeholder="Full-time, Contract, Internship..."
                 className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
-              />
+              >
+                <option value="">Select employment type</option>
+                {EMPLOYMENT_TYPE_OPTIONS.map((type) => (
+                  <option key={type} value={type}>
+                    {type}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -604,12 +726,18 @@ export default function ProfileCreatePage() {
           <div className="grid gap-4 md:grid-cols-2">
             <div>
               <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Degree</label>
-              <input
-                type="text"
+              <select
                 value={item.degree}
                 onChange={(event) => handleEducationChange(index, "degree", event.target.value)}
                 className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
-              />
+              >
+                <option value="">Select a degree</option>
+                {DEGREE_OPTIONS.map((degree) => (
+                  <option key={degree} value={degree}>
+                    {degree}
+                  </option>
+                ))}
+              </select>
             </div>
             <div>
               <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Institution</label>
@@ -659,14 +787,20 @@ export default function ProfileCreatePage() {
             </div>
             <div>
               <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Specialization</label>
-              <input
-                type="text"
+              <select
                 value={item.specialization}
                 onChange={(event) =>
                   handleEducationChange(index, "specialization", event.target.value)
                 }
                 className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
-              />
+              >
+                <option value="">Select specialization</option>
+                {SPECIALIZATION_OPTIONS.map((spec) => (
+                  <option key={spec} value={spec}>
+                    {spec}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
         </div>
@@ -930,6 +1064,7 @@ export default function ProfileCreatePage() {
             label={label}
             values={formData[field]}
             placeholder={placeholder}
+            suggestions={COMMON_SKILLS}
             onAdd={(value) => handleArrayAdd(field, value)}
             onRemove={(index) => handleArrayRemove(field, index)}
           />
@@ -1126,23 +1261,33 @@ export default function ProfileCreatePage() {
         </div>
         <div>
           <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Years of Experience</label>
-          <input
-            type="text"
+          <select
             value={formData.yearsOfExperience}
             onChange={(event) => handleInputChange("yearsOfExperience", event.target.value)}
-            placeholder="e.g. 5+ years"
             className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
-          />
+          >
+            <option value="">Select years of experience</option>
+            {YEARS_OF_EXPERIENCE_OPTIONS.map((years) => (
+              <option key={years} value={years}>
+                {years}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
           <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Notice Period</label>
-          <input
-            type="text"
+          <select
             value={formData.noticePeriod}
             onChange={(event) => handleInputChange("noticePeriod", event.target.value)}
-            placeholder="Immediate / 30 days"
             className="mt-1 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-4 py-3 text-sm focus:border-orange-500 focus:outline-none focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900"
-          />
+          >
+            <option value="">Select notice period</option>
+            {NOTICE_PERIOD_OPTIONS.map((period) => (
+              <option key={period} value={period}>
+                {period}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
     </SectionCard>
