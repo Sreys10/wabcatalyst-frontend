@@ -8,26 +8,22 @@
     "logo_height": "40",
     "logo_text": "WabCatalyst"
   },
-
   "settings": {
     "pagination": 4,
     "summary_length": 200,
     "blog_folder": "blogs"
   },
-
   "nav_button": {
     "enable": true,
     "label": "Get Started",
     "link": "/login"
   },
-
   "params": {
-    "contact_form_action": "",
+    "contact_form_action": "https://formsubmit.co/info@wabcatalyst.com",
     "tag_manager_id": "",
     "footer_content": "Lorem ipsum dolor sit amet, consectetur elit. Consjat tristique eget amet, tempus eu at cttur.",
     "copyright": "Designed and Developed By [Themefisher](https://themefisher.com/)"
   },
-
   "metadata": {
     "meta_author": "Themefisher",
     "meta_image": "",

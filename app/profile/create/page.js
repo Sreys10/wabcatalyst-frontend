@@ -197,10 +197,7 @@ export default function ProfileCreatePage() {
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
 
-  const [mounted, setMounted] = useState(false);
-
   useEffect(() => {
-    setMounted(true);
     if (typeof window === "undefined") return;
     const savedDraft = window.localStorage.getItem(localStorageKey);
     if (savedDraft) {
@@ -405,18 +402,6 @@ export default function ProfileCreatePage() {
 
     try {
       const payload = { ...formData, email: session?.user?.email || formData.email };
-
-      // Filter out empty entries
-      payload.workExperience = payload.workExperience.filter(
-        (item) => item.jobTitle.trim() && item.companyName.trim() && item.startDate.trim()
-      );
-      payload.education = payload.education.filter(
-        (item) => item.degree.trim() && item.institution.trim()
-      );
-      payload.projects = payload.projects.filter((item) => item.projectTitle.trim());
-      payload.certifications = payload.certifications.filter((item) => item.title.trim());
-      payload.languages = payload.languages.filter((item) => item.languageName.trim());
-
       let response = await fetch("/api/profile/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -1209,7 +1194,7 @@ export default function ProfileCreatePage() {
     </div>
   );
 
-  if (!mounted || status === "loading") {
+  if (status === "loading") {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gray-50">
         <p className="text-gray-600">Loading...</p>
