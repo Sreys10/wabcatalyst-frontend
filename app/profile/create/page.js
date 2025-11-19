@@ -402,6 +402,18 @@ export default function ProfileCreatePage() {
 
     try {
       const payload = { ...formData, email: session?.user?.email || formData.email };
+
+      // Filter out empty entries
+      payload.workExperience = payload.workExperience.filter(
+        (item) => item.jobTitle.trim() && item.companyName.trim() && item.startDate.trim()
+      );
+      payload.education = payload.education.filter(
+        (item) => item.degree.trim() && item.institution.trim()
+      );
+      payload.projects = payload.projects.filter((item) => item.projectTitle.trim());
+      payload.certifications = payload.certifications.filter((item) => item.title.trim());
+      payload.languages = payload.languages.filter((item) => item.languageName.trim());
+
       let response = await fetch("/api/profile/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

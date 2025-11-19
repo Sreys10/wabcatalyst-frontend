@@ -6,6 +6,8 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { signUp } from "../api/auth/actions";
 
+const DASHBOARD_ROUTE = "/dashboard";
+
 export default function LoginPage() {
   const router = useRouter();
   const [isSignUp, setIsSignUp] = useState(false);
@@ -43,7 +45,7 @@ export default function LoginPage() {
       if (result?.error) {
         setError(result.error);
       } else if (result?.ok) {
-        const destination = shouldRedirectToProfile ? "/profile/create" : "/";
+        const destination = shouldRedirectToProfile ? "/profile/create" : DASHBOARD_ROUTE;
         router.push(destination);
         router.refresh();
       }
@@ -82,7 +84,9 @@ export default function LoginPage() {
             <button
               type="button"
               onClick={() =>
-                signIn("google", { callbackUrl: isSignUp ? "/profile/create" : "/" })
+                signIn("google", {
+                  callbackUrl: isSignUp ? "/profile/create" : DASHBOARD_ROUTE,
+                })
               }
               disabled={loading}
               className="w-full flex items-center justify-center gap-3 px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-semibold hover:bg-gray-50 dark:hover:bg-gray-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
