@@ -1,3 +1,5 @@
+"use client";
+
 import { markdownify } from "@lib/utils/textConverter";
 import Image from "next/image";
 import Link from "next/link";
@@ -43,8 +45,8 @@ const HomeBanner = ({ banner }) => {
                     <Link
                       key={index}
                       className={`btn ${index === 0
-                          ? "btn-primary shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 hover:scale-105 transition-all duration-300"
-                          : "btn-outline-primary border-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm hover:bg-primary hover:text-white hover:border-primary transition-all duration-300"
+                        ? "btn-primary shadow-lg shadow-primary/30 hover:shadow-xl hover:shadow-primary/40 hover:scale-105 transition-all duration-300"
+                        : "btn-outline-primary border-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm hover:bg-primary hover:text-white hover:border-primary transition-all duration-300"
                         }`}
                       href={button.link}
                       rel={button.rel}
@@ -115,4 +117,3 @@ const HomeBanner = ({ banner }) => {
 };
 
 export default HomeBanner;
-

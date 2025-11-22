@@ -1,0 +1,57 @@
+/* Force black text for all headings and labels in dashboard and onboarding */
+.dashboard h1,
+.dashboard h2,
+.dashboard h3,
+.dashboard h4,
+.dashboard h5,
+.dashboard h6,
+.dashboard label,
+.onboarding h1,
+.onboarding h2,
+.onboarding h3,
+.onboarding h4,
+.onboarding h5,
+.onboarding h6,
+.onboarding label,
+[class*="dashboard"] h1,
+[class*="dashboard"] h2,
+[class*="dashboard"] h3,
+[class*="dashboard"] h4,
+[class*="dashboard"] h5,
+[class*="dashboard"] h6,
+[class*="dashboard"] label {
+  color: #000 !important;
+}
+
+/* Force black text for inputs */
+.dashboard input[type="text"],
+.dashboard input[type="email"],
+.dashboard input[type="tel"],
+.dashboard input[type="url"],
+.dashboard textarea,
+.onboarding input[type="text"],
+.onboarding input[type="email"],
+.onboarding input[type="tel"],
+.onboarding input[type="url"],
+.onboarding textarea,
+[class*="dashboard"] input[type="text"],
+[class*="dashboard"] input[type="email"],
+[class*="dashboard"] input[type="tel"],
+[class*="dashboard"] input[type="url"],
+[class*="dashboard"] textarea {
+  color: #000 !important;
+}
+
+/* Fix for any remaining gray text in dashboard/profile pages */
+[href^="/dashboard"] h1,
+[href^="/dashboard"] h2,
+[href^="/dashboard"] h3,
+[href^="/dashboard"] h4,
+[href^="/dashboard"] label,
+body:has([href^="/dashboard"]) h1,
+body:has([href^="/dashboard"]) h2,
+body:has([href^="/dashboard"]) h3,
+body:has([href^="/dashboard"]) h4,
+body:has([href^="/dashboard"]) label {
+  color: #000 !important;
+}

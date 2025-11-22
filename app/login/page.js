@@ -34,7 +34,7 @@ export default function LoginPage() {
         }
         // Auto login after signup
       }
-      
+
       // Sign in (after signup or direct login)
       const result = await signIn("credentials", {
         email,
@@ -85,7 +85,7 @@ export default function LoginPage() {
               type="button"
               onClick={() =>
                 signIn("google", {
-                  callbackUrl: isSignUp ? "/profile/create" : DASHBOARD_ROUTE,
+                  callbackUrl: isSignUp ? "http://localhost:3000/profile/create" : "http://localhost:3000/dashboard",
                 })
               }
               disabled={loading}

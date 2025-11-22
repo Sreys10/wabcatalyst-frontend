@@ -1,5 +1,5 @@
-import NotFound from "@layouts/404";
-import { getRegularPage } from "@lib/contentParser";
+import NotFound from "../layouts/NotFound";
+import { getRegularPage } from "../lib/contentParser";
 
 const notFound = async () => {
   const notFoundData = await getRegularPage("404");

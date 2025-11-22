@@ -1,11 +1,11 @@
 import config from "@config/config.json";
 import theme from "@config/theme.json";
 import TwSizeIndicator from "@layouts/components/TwSizeIndicator";
-import Footer from "@layouts/partials/Footer";
-import Header from "@layouts/partials/Header";
 import Providers from "@layouts/partials/Providers";
+import DashboardWrapper from "@layouts/components/DashboardWrapper";
 // import "../styles/style.scss";
 import "./output.css";
+import "../styles/text-fix.css";
 
 export const metadata = {
   title: "WabCatalyst",
@@ -58,9 +58,7 @@ export default function RootLayout({ children }) {
       <body suppressHydrationWarning={true}>
         <Providers>
           <TwSizeIndicator />
-          <Header />
-          {children}
-          <Footer />
+          <DashboardWrapper>{children}</DashboardWrapper>
         </Providers>
       </body>
     </html>
