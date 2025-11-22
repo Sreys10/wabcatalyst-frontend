@@ -13,6 +13,7 @@
     "build:css": "sass styles/style.scss styles/style.css && tailwindcss -i styles/style.css -o app/output.css"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "bcryptjs": "^2.4.3",
     "github-slugger": "^2.0.0",
     "gray-matter": "^4.0.3",
