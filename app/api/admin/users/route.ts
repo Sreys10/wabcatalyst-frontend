@@ -72,7 +72,9 @@ export async function GET() {
                 location: user.preferredLocations?.join(", ") || user.preferredLocation || "",
                 salary: user.expectedSalary || "",
                 noticePeriod: user.noticePeriod || ""
-            }
+            },
+            resumeFile: user.resumeFile || "",
+            resumeFileName: user.resumeFileName || ""
         }));
 
         return NextResponse.json(formattedUsers);

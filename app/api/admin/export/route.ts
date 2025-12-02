@@ -42,11 +42,29 @@ export async function GET() {
       { header: "Notice Period", key: "noticePeriod", width: 15 },
       { header: "LinkedIn", key: "linkedin", width: 25 },
       { header: "Portfolio", key: "portfolio", width: 25 },
+      { header: "Resume Link", key: "resume", width: 40 },
     ];
+
+    // Style the header row
+    const headerRow = worksheet.getRow(1);
+    headerRow.font = { bold: true, color: { argb: "FFFFFFFF" }, size: 12 };
+    headerRow.fill = {
+      type: "pattern",
+      pattern: "solid",
+      fgColor: { argb: "FF2F855A" }, // Green background
+    };
+    headerRow.alignment = { vertical: "middle", horizontal: "center" };
+    headerRow.height = 30;
+
+    // Auto-filter
+    worksheet.autoFilter = {
+      from: { row: 1, column: 1 },
+      to: { row: 1, column: worksheet.columns.length },
+    };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     users.forEach((user: any) => {
-      worksheet.addRow({
+      const row = worksheet.addRow({
         fullName: user.fullName || "",
         email: user.email || "",
         phone: user.phone || "",
@@ -71,6 +89,19 @@ export async function GET() {
         noticePeriod: user.noticePeriod || "",
         linkedin: user.linkedIn || "",
         portfolio: user.portfolio || "",
+        resume: user.resumeFile || "",
+      });
+
+      // Style the row
+      row.eachCell((cell) => {
+        cell.font = { color: { argb: "FF000000" } }; // Black text
+        cell.alignment = { vertical: "top", wrapText: true };
+        cell.border = {
+          top: { style: "thin" },
+          left: { style: "thin" },
+          bottom: { style: "thin" },
+          right: { style: "thin" },
+        };
       });
     });
 
