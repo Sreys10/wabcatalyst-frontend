@@ -293,7 +293,7 @@ const ProfileContent = () => {
                             type="button"
                             onClick={() => handleSave('personal')}
                             disabled={saving}
-                            className="px-4 py-2 rounded-lg bg-orange-50 text-orange-600 text-sm font-medium hover:bg-orange-100 transition-colors disabled:opacity-50"
+                            className="px-4 py-2 rounded-lg bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 text-sm font-medium hover:bg-orange-100 dark:hover:bg-orange-900/40 transition-colors disabled:opacity-50"
                         >
                             {saving ? 'Saving...' : 'Save'}
                         </button>
@@ -335,28 +335,28 @@ const ProfileContent = () => {
                                     type="text"
                                     value={profileData.personal.location}
                                     onChange={(e) => handleInputChange('personal', 'location', e.target.value)}
-                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all capitalize placeholder-gray-300 dark:placeholder-gray-600"
+                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-orange-500 focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900 outline-none transition-all capitalize placeholder-gray-300 dark:placeholder-gray-500"
                                     style={{ textTransform: 'capitalize' }}
                                     placeholder="New York, USA"
                                 />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-gray-700">LinkedIn URL</label>
+                                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">LinkedIn URL</label>
                                 <input
                                     type="url"
                                     value={profileData.personal.linkedin}
                                     onChange={(e) => handleInputChange('personal', 'linkedin', e.target.value)}
-                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all placeholder-gray-300 dark:placeholder-gray-600"
+                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-orange-500 focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900 outline-none transition-all placeholder-gray-300 dark:placeholder-gray-500"
                                     placeholder="linkedin.com/in/johndoe"
                                 />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-sm font-medium text-gray-700">Portfolio URL</label>
+                                <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Portfolio URL</label>
                                 <input
                                     type="url"
                                     value={profileData.personal.portfolio}
                                     onChange={(e) => handleInputChange('personal', 'portfolio', e.target.value)}
-                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all placeholder-gray-300 dark:placeholder-gray-600"
+                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-orange-500 focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900 outline-none transition-all placeholder-gray-300 dark:placeholder-gray-500"
                                     placeholder="johndoe.com"
                                 />
                             </div>
@@ -382,7 +382,7 @@ const ProfileContent = () => {
                     </div>
                     <div className="space-y-6">
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-gray-700">Short Bio / About Me</label>
+                            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Short Bio / About Me</label>
                             <div className="relative">
                                 <textarea
                                     value={bioText}
@@ -392,7 +392,7 @@ const ProfileContent = () => {
                                         const capitalized = val.charAt(0).toUpperCase() + val.slice(1);
                                         setBioText(capitalized);
                                     }}
-                                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all min-h-[120px] placeholder-gray-300 dark:placeholder-gray-600"
+                                    className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-orange-500 focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900 outline-none transition-all min-h-[120px] placeholder-gray-300 dark:placeholder-gray-500"
                                     placeholder="I am a passionate software engineer with 5 years of experience..."
                                 />
                                 <div className={`text-xs text-right mt-1 ${bioText.split(/\s+/).filter(w => w).length < 50 ? 'text-red-500' : 'text-green-600'}`}>
@@ -401,7 +401,7 @@ const ProfileContent = () => {
                             </div>
                         </div>
                         <div className="space-y-2" ref={jobTitleRef}>
-                            <label className="text-sm font-medium text-gray-700">Preferred Job Titles</label>
+                            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Preferred Job Titles</label>
                             <div className="relative">
                                 <input
                                     type="text"
@@ -411,11 +411,11 @@ const ProfileContent = () => {
                                         e.target.value = e.target.value;
                                         setShowJobTitleDropdown(true);
                                     }}
-                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all placeholder-gray-300 dark:placeholder-gray-600"
+                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-orange-500 focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900 outline-none transition-all placeholder-gray-300 dark:placeholder-gray-500"
                                     placeholder="e.g. Frontend Developer, Full Stack Engineer"
                                 />
                                 {showJobTitleDropdown && (
-                                    <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-xl shadow-lg max-h-60 overflow-y-auto">
+                                    <div className="absolute z-50 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg max-h-60 overflow-y-auto">
                                         {jobTitles.map((title, index) => (
                                             <div
                                                 key={index}
@@ -429,7 +429,7 @@ const ProfileContent = () => {
                                                     }
                                                     setShowJobTitleDropdown(false);
                                                 }}
-                                                className="px-4 py-2.5 hover:bg-orange-50 cursor-pointer transition-colors text-sm text-gray-700 hover:text-orange-600"
+                                                className="px-4 py-2.5 hover:bg-orange-50 dark:hover:bg-gray-700 cursor-pointer transition-colors text-sm text-gray-700 dark:text-gray-200 hover:text-orange-600 dark:hover:text-orange-400"
                                             >
                                                 {title}
                                             </div>
@@ -461,7 +461,7 @@ const ProfileContent = () => {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         {/* Primary Skills */}
                         <div className="space-y-2" ref={primarySkillsRef}>
-                            <label className="text-sm font-medium text-gray-700">Primary Skills</label>
+                            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Primary Skills</label>
                             <div className="relative">
                                 <input
                                     type="text"
@@ -471,11 +471,11 @@ const ProfileContent = () => {
                                         e.target.value = e.target.value;
                                         setShowPrimarySkillsDropdown(true);
                                     }}
-                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all placeholder-gray-300 dark:placeholder-gray-600"
+                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-orange-500 focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900 outline-none transition-all placeholder-gray-300 dark:placeholder-gray-500"
                                     placeholder="React, TypeScript, Node.js"
                                 />
                                 {showPrimarySkillsDropdown && (
-                                    <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-xl shadow-lg max-h-60 overflow-y-auto">
+                                    <div className="absolute z-50 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg max-h-60 overflow-y-auto">
                                         {skillsList.map((skill, index) => (
                                             <div
                                                 key={index}
@@ -489,7 +489,7 @@ const ProfileContent = () => {
                                                     }
                                                     setShowPrimarySkillsDropdown(false);
                                                 }}
-                                                className="px-4 py-2.5 hover:bg-orange-50 cursor-pointer transition-colors text-sm text-gray-700 hover:text-orange-600"
+                                                className="px-4 py-2.5 hover:bg-orange-50 dark:hover:bg-gray-700 cursor-pointer transition-colors text-sm text-gray-700 dark:text-gray-200 hover:text-orange-600 dark:hover:text-orange-400"
                                             >
                                                 {skill}
                                             </div>
@@ -501,7 +501,7 @@ const ProfileContent = () => {
 
                         {/* Tools & Technologies */}
                         <div className="space-y-2" ref={toolsRef}>
-                            <label className="text-sm font-medium text-gray-700">Tools & Technologies</label>
+                            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Tools & Technologies</label>
                             <div className="relative">
                                 <input
                                     type="text"
@@ -511,11 +511,11 @@ const ProfileContent = () => {
                                         e.target.value = e.target.value;
                                         setShowToolsDropdown(true);
                                     }}
-                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all placeholder-gray-300 dark:placeholder-gray-600"
+                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-orange-500 focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900 outline-none transition-all placeholder-gray-300 dark:placeholder-gray-500"
                                     placeholder="VS Code, Git, Figma"
                                 />
                                 {showToolsDropdown && (
-                                    <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-xl shadow-lg max-h-60 overflow-y-auto">
+                                    <div className="absolute z-50 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg max-h-60 overflow-y-auto">
                                         {skillsList.map((skill, index) => (
                                             <div
                                                 key={index}
@@ -529,7 +529,7 @@ const ProfileContent = () => {
                                                     }
                                                     setShowToolsDropdown(false);
                                                 }}
-                                                className="px-4 py-2.5 hover:bg-orange-50 cursor-pointer transition-colors text-sm text-gray-700 hover:text-orange-600"
+                                                className="px-4 py-2.5 hover:bg-orange-50 dark:hover:bg-gray-700 cursor-pointer transition-colors text-sm text-gray-700 dark:text-gray-200 hover:text-orange-600 dark:hover:text-orange-400"
                                             >
                                                 {skill}
                                             </div>
@@ -541,7 +541,7 @@ const ProfileContent = () => {
 
                         {/* Soft Skills */}
                         <div className="space-y-2" ref={softSkillsRef}>
-                            <label className="text-sm font-medium text-gray-700">Soft Skills</label>
+                            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Soft Skills</label>
                             <div className="relative">
                                 <input
                                     type="text"
@@ -551,11 +551,11 @@ const ProfileContent = () => {
                                         e.target.value = e.target.value;
                                         setShowSoftSkillsDropdown(true);
                                     }}
-                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all placeholder-gray-300 dark:placeholder-gray-600"
+                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-orange-500 focus:ring-2 focus:ring-orange-100 dark:focus:ring-orange-900 outline-none transition-all placeholder-gray-300 dark:placeholder-gray-500"
                                     placeholder="Leadership, Communication"
                                 />
                                 {showSoftSkillsDropdown && (
-                                    <div className="absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-xl shadow-lg max-h-60 overflow-y-auto">
+                                    <div className="absolute z-50 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg max-h-60 overflow-y-auto">
                                         {skillsList.map((skill, index) => (
                                             <div
                                                 key={index}
@@ -569,7 +569,7 @@ const ProfileContent = () => {
                                                     }
                                                     setShowSoftSkillsDropdown(false);
                                                 }}
-                                                className="px-4 py-2.5 hover:bg-orange-50 cursor-pointer transition-colors text-sm text-gray-700 hover:text-orange-600"
+                                                className="px-4 py-2.5 hover:bg-orange-50 dark:hover:bg-gray-700 cursor-pointer transition-colors text-sm text-gray-700 dark:text-gray-200 hover:text-orange-600 dark:hover:text-orange-400"
                                             >
                                                 {skill}
                                             </div>
@@ -600,7 +600,7 @@ const ProfileContent = () => {
                             <button
                                 type="button"
                                 onClick={() => handleAddNew('experience')}
-                                className="flex items-center gap-2 text-sm font-medium text-orange-600 hover:bg-orange-50 px-3 py-1.5 rounded-lg transition-colors"
+                                className="flex items-center gap-2 text-sm font-medium text-orange-600 dark:text-orange-400 hover:bg-orange-50 dark:hover:bg-gray-700 px-3 py-1.5 rounded-lg transition-colors"
                             >
                                 <Plus className="w-4 h-4" /> Add New
                             </button>
@@ -615,7 +615,7 @@ const ProfileContent = () => {
                                         type="text"
                                         value={exp.title}
                                         onChange={(e) => handleArrayInputChange('experience', index, 'title', e.target.value)}
-                                        className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm placeholder-gray-300 dark:placeholder-gray-600"
+                                        className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm placeholder-gray-300 dark:placeholder-gray-500"
                                         placeholder="Job Title"
                                         onFocus={() => {
                                             // Close other dropdowns
@@ -638,12 +638,12 @@ const ProfileContent = () => {
                                             }, 200);
                                         }}
                                     />
-                                    <div id={`job-title-dropdown-${index}`} className="hidden absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-xl shadow-lg max-h-60 overflow-y-auto">
+                                    <div id={`job-title-dropdown-${index}`} className="hidden absolute z-50 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg max-h-60 overflow-y-auto">
                                         {jobTitles.map((title, i) => (
                                             <div
                                                 key={i}
                                                 onMouseDown={() => handleArrayInputChange('experience', index, 'title', title)}
-                                                className="px-4 py-2.5 hover:bg-orange-50 cursor-pointer transition-colors text-sm text-gray-700 hover:text-orange-600"
+                                                className="px-4 py-2.5 hover:bg-orange-50 dark:hover:bg-gray-700 cursor-pointer transition-colors text-sm text-gray-700 dark:text-gray-200 hover:text-orange-600 dark:hover:text-orange-400"
                                             >
                                                 {title}
                                             </div>
@@ -654,7 +654,7 @@ const ProfileContent = () => {
                                     type="text"
                                     value={exp.company}
                                     onChange={(e) => handleArrayInputChange('experience', index, 'company', e.target.value)}
-                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm placeholder-gray-300 dark:placeholder-gray-600"
+                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm placeholder-gray-300 dark:placeholder-gray-500"
                                     placeholder="Company Name"
                                 />
                                 <div className="flex gap-4">
@@ -662,14 +662,14 @@ const ProfileContent = () => {
                                         type="date"
                                         value={exp.startDate}
                                         onChange={(e) => handleArrayInputChange('experience', index, 'startDate', e.target.value)}
-                                        className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm text-gray-500 placeholder-gray-300 dark:placeholder-gray-600"
+                                        className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm text-gray-500 dark:text-gray-300 placeholder-gray-300 dark:placeholder-gray-500"
                                         placeholder="Start Date"
                                     />
                                     <input
                                         type="date"
                                         value={exp.endDate}
                                         onChange={(e) => handleArrayInputChange('experience', index, 'endDate', e.target.value)}
-                                        className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm text-gray-500 placeholder-gray-300 dark:placeholder-gray-600"
+                                        className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm text-gray-500 dark:text-gray-300 placeholder-gray-300 dark:placeholder-gray-500"
                                         placeholder="End Date"
                                     />
                                 </div>
@@ -677,14 +677,14 @@ const ProfileContent = () => {
                                     type="text"
                                     value={exp.location}
                                     onChange={(e) => handleArrayInputChange('experience', index, 'location', e.target.value)}
-                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm placeholder-gray-300 dark:placeholder-gray-600"
+                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm placeholder-gray-300 dark:placeholder-gray-500"
                                     placeholder="Location"
                                 />
                             </div>
                             <textarea
                                 value={exp.description}
                                 onChange={(e) => handleArrayInputChange('experience', index, 'description', e.target.value)}
-                                className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm min-h-[80px] placeholder-gray-300 dark:placeholder-gray-600"
+                                className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm min-h-[80px] placeholder-gray-300 dark:placeholder-gray-500"
                                 placeholder="Responsibilities & Achievements..."
                             />
                         </div>
@@ -710,7 +710,7 @@ const ProfileContent = () => {
                             <button
                                 type="button"
                                 onClick={() => handleAddNew('education')}
-                                className="flex items-center gap-2 text-sm font-medium text-orange-600 hover:bg-orange-50 px-3 py-1.5 rounded-lg transition-colors"
+                                className="flex items-center gap-2 text-sm font-medium text-orange-600 dark:text-orange-400 hover:bg-orange-50 dark:hover:bg-gray-700 px-3 py-1.5 rounded-lg transition-colors"
                             >
                                 <Plus className="w-4 h-4" /> Add New
                             </button>
@@ -724,7 +724,7 @@ const ProfileContent = () => {
                                         type="text"
                                         value={edu.degree}
                                         onChange={(e) => handleArrayInputChange('education', index, 'degree', e.target.value)}
-                                        className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm placeholder-gray-300 dark:placeholder-gray-600"
+                                        className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm placeholder-gray-300 dark:placeholder-gray-500"
                                         placeholder="Degree / Qualification"
                                         onFocus={() => {
                                             const dropdown = document.getElementById(`degree-dropdown-${index}`);
@@ -737,12 +737,12 @@ const ProfileContent = () => {
                                             }, 200);
                                         }}
                                     />
-                                    <div id={`degree-dropdown-${index}`} className="hidden absolute z-50 w-full mt-1 bg-white border border-gray-200 rounded-xl shadow-lg max-h-60 overflow-y-auto">
+                                    <div id={`degree-dropdown-${index}`} className="hidden absolute z-50 w-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg max-h-60 overflow-y-auto">
                                         {degrees.filter(d => d.toLowerCase().includes((edu.degree || '').toLowerCase())).map((degree, i) => (
                                             <div
                                                 key={i}
                                                 onMouseDown={() => handleArrayInputChange('education', index, 'degree', degree)}
-                                                className="px-4 py-2.5 hover:bg-orange-50 cursor-pointer transition-colors text-sm text-gray-700 hover:text-orange-600"
+                                                className="px-4 py-2.5 hover:bg-orange-50 dark:hover:bg-gray-700 cursor-pointer transition-colors text-sm text-gray-700 dark:text-gray-200 hover:text-orange-600 dark:hover:text-orange-400"
                                             >
                                                 {degree}
                                             </div>
@@ -753,21 +753,21 @@ const ProfileContent = () => {
                                     type="text"
                                     value={edu.institution}
                                     onChange={(e) => handleArrayInputChange('education', index, 'institution', e.target.value)}
-                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm placeholder-gray-300 dark:placeholder-gray-600"
+                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm placeholder-gray-300 dark:placeholder-gray-500"
                                     placeholder="University / Institution"
                                 />
                                 <input
                                     type="text"
                                     value={edu.year}
                                     onChange={(e) => handleArrayInputChange('education', index, 'year', e.target.value)}
-                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm placeholder-gray-300 dark:placeholder-gray-600"
+                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm placeholder-gray-300 dark:placeholder-gray-500"
                                     placeholder="Year of Passing"
                                 />
                                 <input
                                     type="text"
                                     value={edu.grade}
                                     onChange={(e) => handleArrayInputChange('education', index, 'grade', e.target.value)}
-                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm placeholder-gray-300 dark:placeholder-gray-600"
+                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm placeholder-gray-300 dark:placeholder-gray-500"
                                     placeholder="CGPA / Percentage"
                                 />
                             </div>
@@ -794,7 +794,7 @@ const ProfileContent = () => {
                             <button
                                 type="button"
                                 onClick={() => handleAddNew('projects')}
-                                className="flex items-center gap-2 text-sm font-medium text-orange-600 hover:bg-orange-50 px-3 py-1.5 rounded-lg transition-colors"
+                                className="flex items-center gap-2 text-sm font-medium text-orange-600 dark:text-orange-400 hover:bg-orange-50 dark:hover:bg-gray-700 px-3 py-1.5 rounded-lg transition-colors"
                             >
                                 <Plus className="w-4 h-4" /> Add New
                             </button>
@@ -807,13 +807,13 @@ const ProfileContent = () => {
                                     type="text"
                                     value={proj.title}
                                     onChange={(e) => handleArrayInputChange('projects', index, 'title', e.target.value)}
-                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm"
+                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm placeholder-gray-300 dark:placeholder-gray-500"
                                     placeholder="Project Title"
                                 />
                                 <textarea
                                     value={proj.description}
                                     onChange={(e) => handleArrayInputChange('projects', index, 'description', e.target.value)}
-                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm min-h-[60px]"
+                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm min-h-[60px] placeholder-gray-300 dark:placeholder-gray-500"
                                     placeholder="Description"
                                 />
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -821,14 +821,14 @@ const ProfileContent = () => {
                                         type="text"
                                         value={proj.technologies}
                                         onChange={(e) => handleArrayInputChange('projects', index, 'technologies', e.target.value)}
-                                        className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm"
+                                        className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm placeholder-gray-300 dark:placeholder-gray-500"
                                         placeholder="Technologies Used"
                                     />
                                     <input
                                         type="url"
                                         value={proj.link}
                                         onChange={(e) => handleArrayInputChange('projects', index, 'link', e.target.value)}
-                                        className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm"
+                                        className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm placeholder-gray-300 dark:placeholder-gray-500"
                                         placeholder="Project Link (GitHub/Demo)"
                                     />
                                 </div>
@@ -856,7 +856,7 @@ const ProfileContent = () => {
                             <button
                                 type="button"
                                 onClick={() => handleAddNew('certifications')}
-                                className="flex items-center gap-2 text-sm font-medium text-orange-600 hover:bg-orange-50 px-3 py-1.5 rounded-lg transition-colors"
+                                className="flex items-center gap-2 text-sm font-medium text-orange-600 dark:text-orange-400 hover:bg-orange-50 dark:hover:bg-gray-700 px-3 py-1.5 rounded-lg transition-colors"
                             >
                                 <Plus className="w-4 h-4" /> Add New
                             </button>
@@ -869,14 +869,14 @@ const ProfileContent = () => {
                                     type="text"
                                     value={cert.name}
                                     onChange={(e) => handleArrayInputChange('certifications', index, 'name', e.target.value)}
-                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm"
+                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm placeholder-gray-300 dark:placeholder-gray-500"
                                     placeholder="Certification Name"
                                 />
                                 <input
                                     type="text"
                                     value={cert.issuer}
                                     onChange={(e) => handleArrayInputChange('certifications', index, 'issuer', e.target.value)}
-                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm"
+                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm placeholder-gray-300 dark:placeholder-gray-500"
                                     placeholder="Issuing Organization"
                                 />
                             </div>
@@ -902,11 +902,11 @@ const ProfileContent = () => {
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-gray-700">Preferred Job Type</label>
+                            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Preferred Job Type</label>
                             <select
                                 value={profileData.preferences.jobType}
                                 onChange={(e) => handleInputChange('preferences', 'jobType', e.target.value)}
-                                className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm"
+                                className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm"
                             >
                                 <option>Full-time</option>
                                 <option>Part-time</option>
@@ -915,22 +915,22 @@ const ProfileContent = () => {
                             </select>
                         </div>
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-gray-700">Preferred Location</label>
+                            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Preferred Location</label>
                             <input
                                 type="text"
                                 value={profileData.preferences.location}
                                 onChange={(e) => handleInputChange('preferences', 'location', e.target.value)}
-                                className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm"
+                                className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm placeholder-gray-300 dark:placeholder-gray-500"
                                 placeholder="e.g. Remote, New York"
                             />
                         </div>
                         <div className="space-y-2">
-                            <label className="text-sm font-medium text-gray-700">Expected Salary</label>
+                            <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Expected Salary</label>
                             <input
                                 type="text"
                                 value={profileData.preferences.salary}
                                 onChange={(e) => handleInputChange('preferences', 'salary', e.target.value)}
-                                className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm"
+                                className="w-full px-4 py-2 rounded-lg border border-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-white text-sm placeholder-gray-300 dark:placeholder-gray-500"
                                 placeholder="e.g. $80k - $100k"
                             />
                         </div>
@@ -960,12 +960,12 @@ const ProfileContent = () => {
                     </div>
                     <div className="space-y-3">
                         {profileData.documents.map((doc) => (
-                            <div key={doc.id} className="flex items-center justify-between p-4 border border-gray-100 rounded-xl hover:border-orange-100 transition-colors">
+                            <div key={doc.id} className="flex items-center justify-between p-4 border border-gray-100 dark:border-gray-700 rounded-xl hover:border-orange-100 transition-colors">
                                 <div className="flex items-center gap-3">
                                     <div className="w-10 h-10 rounded-lg bg-red-50 flex items-center justify-center text-red-500 font-bold text-xs">PDF</div>
                                     <div>
-                                        <p className="text-sm font-medium text-gray-900">{doc.name}</p>
-                                        <p className="text-xs text-gray-500">{doc.type} • Added {doc.date}</p>
+                                        <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{doc.name}</p>
+                                        <p className="text-xs text-gray-500 dark:text-gray-400">{doc.type} • Added {doc.date}</p>
                                     </div>
                                 </div>
                                 <button className="text-gray-400 hover:text-red-500 transition-colors">
@@ -995,7 +995,7 @@ const ProfileContent = () => {
                     </div>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         {['Languages', 'Volunteering', 'Awards', 'Publications'].map((item) => (
-                            <button key={item} className="p-4 border border-dashed border-gray-300 rounded-xl text-gray-500 hover:border-orange-500 hover:text-orange-600 hover:bg-orange-50 transition-all flex flex-col items-center justify-center gap-2">
+                            <button key={item} className="p-4 border border-dashed border-gray-300 dark:border-gray-600 rounded-xl text-gray-500 dark:text-gray-400 hover:border-orange-500 hover:text-orange-600 hover:bg-orange-50 dark:hover:bg-gray-700 transition-all flex flex-col items-center justify-center gap-2">
                                 <Plus className="w-5 h-5" />
                                 <span className="text-sm font-medium">{item}</span>
                             </button>
@@ -1038,22 +1038,22 @@ const ProfileContent = () => {
                     <div className="space-y-3 mt-6">
                         <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-200">Missing Information:</h4>
                         <ul className="space-y-2">
-                            <li className="flex items-center gap-2 text-sm text-gray-600">
+                            <li className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                                 <AlertCircle className="w-4 h-4 text-indigo-500" />
                                 <span>Add Professional Summary</span>
                             </li>
-                            <li className="flex items-center gap-2 text-sm text-gray-600">
+                            <li className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                                 <AlertCircle className="w-4 h-4 text-indigo-500" />
                                 <span>Upload Resume</span>
                             </li>
-                            <li className="flex items-center gap-2 text-sm text-gray-600">
+                            <li className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
                                 <AlertCircle className="w-4 h-4 text-indigo-500" />
                                 <span>Add 2 more Skills</span>
                             </li>
                         </ul>
                     </div>
 
-                    <div className="mt-6 pt-6 border-t border-gray-100">
+                    <div className="mt-6 pt-6 border-t border-gray-100 dark:border-gray-700">
                         <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-200 mb-3">Quick Navigation</h4>
                         <nav className="space-y-1">
                             {sections.map((section) => (

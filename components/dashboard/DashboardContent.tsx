@@ -348,10 +348,10 @@ const DashboardContent = () => {
                                             missingSections.filter(item => item && item.trim() !== '').map((item, i) => (
                                                 <div
                                                     key={i}
-                                                    className="flex items-center gap-3 px-4 py-3 bg-white dark:bg-gray-700/50 border-2 border-red-200 dark:border-red-800 rounded-lg hover:border-red-300 dark:hover:border-red-700 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all shadow-sm"
+                                                    className="flex items-center gap-3 px-4 py-3 bg-white dark:bg-gray-700 border-2 border-red-200 dark:border-red-800 rounded-lg hover:border-red-300 dark:hover:border-red-700 hover:bg-red-50 dark:hover:bg-red-900/20 transition-all shadow-sm"
                                                 >
                                                     <div className="w-2.5 h-2.5 bg-red-500 dark:bg-red-400 rounded-full flex-shrink-0"></div>
-                                                    <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">{item}</span>
+                                                    <span className="text-sm font-semibold text-gray-800 dark:text-gray-100">{item}</span>
                                                 </div>
                                             ))
                                         ) : (

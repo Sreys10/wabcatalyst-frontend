@@ -22,7 +22,7 @@ const Header = () => {
 
     return (
         <header className="h-20 bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between px-6 md:px-8 transition-colors duration-200">
-            <div className="flex-1 max-w-2xl mr-6">
+            <div className="flex-1 max-w-md mr-6">
                 <div className="relative flex items-center bg-gray-50 dark:bg-gray-700/50 rounded-xl px-4 py-2.5 focus-within:ring-2 focus-within:ring-orange-200 dark:focus-within:ring-orange-800 transition-all">
                     <Search className="w-5 h-5 text-gray-400 dark:text-gray-500 mr-3" />
                     <input
