@@ -62,8 +62,8 @@ const DashboardContent = () => {
         const file = e.target.files?.[0];
         if (!file) return;
 
-        if (file.size > 2 * 1024 * 1024) {
-            alert("File size must be less than 2MB");
+        if (file.size > 5 * 1024 * 1024) {
+            alert("File size must be less than 5MB");
             return;
         }
 
@@ -72,12 +72,26 @@ const DashboardContent = () => {
             const base64String = event.target?.result as string;
 
             try {
-                // Save resume to profile
+                // Upload to Cloudinary first
+                const uploadRes = await fetch('/api/upload', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ file: base64String, folder: 'resumes' })
+                });
+
+                if (!uploadRes.ok) {
+                    throw new Error('Failed to upload to cloud storage');
+                }
+
+                const uploadData = await uploadRes.json();
+                const resumeUrl = uploadData.url;
+
+                // Save resume URL to profile
                 const res = await fetch('/api/onboarding/save', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        resumeFile: base64String,
+                        resumeFile: resumeUrl, // Store URL instead of base64
                         resumeFileName: file.name
                     })
                 });
@@ -87,10 +101,11 @@ const DashboardContent = () => {
                     // Trigger ATS calculation
                     fetchATSScore();
                 } else {
-                    console.error("Failed to upload resume");
+                    console.error("Failed to save resume info");
                 }
             } catch (error) {
                 console.error("Error uploading resume:", error);
+                alert("Failed to upload resume. Please try again.");
             }
         };
         reader.readAsDataURL(file);

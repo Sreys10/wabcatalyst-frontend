@@ -152,18 +152,50 @@ const ProfileContent = () => {
         });
     };
 
-    const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handlePhotoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
+            // Validate file size (e.g., max 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                showToast('File size too large. Max 5MB.', 'error');
+                return;
+            }
+
             const reader = new FileReader();
-            reader.onloadend = () => {
-                setProfileData(prev => ({
-                    ...prev,
-                    personal: {
-                        ...prev.personal,
-                        photo: reader.result as string
+            reader.onloadend = async () => {
+                const base64String = reader.result as string;
+
+                // Show loading state or toast
+                showToast('Uploading photo...', 'success'); // Using success type for info temporarily
+
+                try {
+                    const res = await fetch('/api/upload', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ file: base64String, folder: 'profile-photos' })
+                    });
+
+                    if (res.ok) {
+                        const data = await res.json();
+                        setProfileData(prev => ({
+                            ...prev,
+                            personal: {
+                                ...prev.personal,
+                                photo: data.url
+                            }
+                        }));
+                        showToast('Photo uploaded successfully!', 'success');
+
+                        // Optional: Immediately save profile with new photo URL to update session
+                        // This ensures the session gets the URL, not the base64 string
+                        // We can call handleSave('personal') here if we want auto-save behavior
+                    } else {
+                        showToast('Failed to upload photo.', 'error');
                     }
-                }));
+                } catch (error) {
+                    console.error('Upload error:', error);
+                    showToast('Error uploading photo.', 'error');
+                }
             };
             reader.readAsDataURL(file);
         }
