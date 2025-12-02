@@ -1,8 +1,8 @@
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@lib/auth';
-import connectDB from '@lib/db';
-import Profile from '@models/Profile';
-import ATSAnalysis from '@models/ATSAnalysis';
+import { authOptions } from '@/lib/auth';
+import connectDB from '@/lib/db';
+import UserProfile from '@/models/UserProfile';
+import ATSAnalysis from '@/models/ATSAnalysis';
 import { analyzeProfile } from '../../../../backend/ats-analyzer/index.js';
 
 /**
@@ -24,7 +24,7 @@ export async function POST(req) {
         await connectDB();
 
         // Get user profile
-        const profile = await Profile.findOne({ email: session.user.email });
+        const profile = await UserProfile.findOne({ email: session.user.email });
         if (!profile) {
             return Response.json(
                 { success: false, error: 'Profile not found' },
@@ -33,7 +33,7 @@ export async function POST(req) {
         }
 
         // Check for recent analysis (< 24 hours)
-        const existingAnalysis = await ATSAnalysis.getLatestForUser(profile._id);
+        const existingAnalysis = await ATSAnalysis.getLatestForUser(profile.userId);
         if (existingAnalysis && ATSAnalysis.isFresh(existingAnalysis)) {
             return Response.json({
                 success: true,
@@ -49,14 +49,65 @@ export async function POST(req) {
             });
         }
 
+        // Map UserProfile to the structure expected by analyzeProfile
+        const mappedProfile = {
+            personal: {
+                fullName: profile.fullName,
+                email: profile.email,
+                phone: profile.phone,
+                location: profile.location,
+                linkedin: profile.linkedIn,
+                portfolio: profile.portfolio,
+                photo: profile.profileImage,
+            },
+            summary: {
+                bio: profile.professionalSummary,
+                jobTitles: profile.preferredRoles?.join(', '),
+            },
+            skills: {
+                primary: profile.primarySkills?.join(', '),
+                tools: profile.toolsAndTechnologies?.join(', '),
+                soft: profile.softSkills?.join(', '),
+            },
+            experience: profile.workExperience?.map(exp => ({
+                title: exp.jobTitle,
+                company: exp.companyName,
+                startDate: exp.startDate,
+                endDate: exp.endDate,
+                location: exp.location,
+                description: exp.responsibilities?.join('\n'),
+            })),
+            education: profile.education?.map(edu => ({
+                degree: edu.degree,
+                institution: edu.institution,
+                year: edu.endYear,
+                grade: edu.cgpaOrPercentage,
+            })),
+            projects: profile.projects?.map(proj => ({
+                title: proj.projectTitle,
+                description: proj.description,
+                technologies: proj.technologiesUsed?.join(', '),
+                link: proj.projectLink,
+            })),
+            certifications: profile.certifications?.map(cert => ({
+                name: cert.title,
+                issuer: cert.issuer,
+            })),
+            preferences: {
+                jobType: profile.preferredJobType?.join(', '),
+                location: profile.preferredLocations?.join(', '),
+                salary: profile.expectedSalary,
+            },
+        };
+
         // Analyze profile
-        const analysisResult = await analyzeProfile(profile, {
+        const analysisResult = await analyzeProfile(mappedProfile, {
             saveSnapshot: true,
         });
 
         // Save to database
         const atsAnalysis = new ATSAnalysis({
-            userId: profile._id,
+            userId: profile.userId,
             score: analysisResult.score,
             suggestions: analysisResult.suggestions,
             strengths: analysisResult.strengths,
@@ -114,7 +165,7 @@ export async function GET(req) {
         await connectDB();
 
         // Get user profile
-        const profile = await Profile.findOne({ email: session.user.email });
+        const profile = await UserProfile.findOne({ email: session.user.email });
         if (!profile) {
             return Response.json(
                 { success: false, error: 'Profile not found' },
@@ -123,7 +174,7 @@ export async function GET(req) {
         }
 
         // Get latest analysis
-        const analysis = await ATSAnalysis.getLatestForUser(profile._id);
+        const analysis = await ATSAnalysis.getLatestForUser(profile.userId);
 
         if (!analysis) {
             return Response.json({

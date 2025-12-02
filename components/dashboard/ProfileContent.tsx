@@ -39,6 +39,8 @@ const initialProfileData = {
         strengths: "",
         hobbies: "",
     },
+    resumeFileName: "",
+    resumeFile: "",
 };
 
 const ProfileContent = () => {
@@ -303,16 +305,16 @@ const ProfileContent = () => {
                         {/* Profile Photo */}
                         <div className="flex flex-col items-center gap-3">
                             <div
-                                className="w-24 h-24 rounded-full bg-gray-100 border-4 border-white shadow-md flex items-center justify-center relative overflow-hidden group cursor-pointer"
+                                className="w-20 h-20 rounded-full bg-gray-100 border-4 border-white shadow-md flex items-center justify-center relative overflow-hidden group cursor-pointer"
                                 onClick={() => fileInputRef.current?.click()}
                             >
                                 {profileData.personal.photo || session?.user?.image ? (
                                     <img src={profileData.personal.photo || session?.user?.image || ''} alt="Profile" className="w-full h-full object-cover" />
                                 ) : (
-                                    <span className="text-4xl">👤</span>
+                                    <span className="text-3xl">👤</span>
                                 )}
                                 <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <Camera className="text-white w-8 h-8" />
+                                    <Camera className="text-white w-6 h-6" />
                                 </div>
                             </div>
                             <button
@@ -940,47 +942,85 @@ const ProfileContent = () => {
                 {/* 9. Documents */}
                 <section id="documents" className="bg-white dark:bg-gray-800 p-6 rounded-3xl shadow-sm dark:shadow-gray-900/50 scroll-mt-24 transition-colors">
                     <div className="flex justify-between items-center mb-6">
-                        <h2 className="text-xl font-semibold text-gray-700 flex items-center gap-2">
+                        <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-200 flex items-center gap-2">
                             <span className="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center text-sm">9</span>
                             Documents
                         </h2>
-                        <div className="flex gap-2">
-                            <button
-                                type="button"
-                                onClick={() => handleSave('documents')}
-                                disabled={saving}
-                                className="px-4 py-2 rounded-lg bg-orange-50 text-orange-600 text-sm font-medium hover:bg-orange-100 transition-colors disabled:opacity-50"
-                            >
-                                {saving ? 'Saving...' : 'Save'}
-                            </button>
-                            <button className="flex items-center gap-2 text-sm font-medium text-orange-600 hover:bg-orange-50 px-3 py-1.5 rounded-lg transition-colors">
-                                <Upload className="w-4 h-4" /> Upload
-                            </button>
-                        </div>
+                        <button
+                            type="button"
+                            onClick={() => handleSave('documents')}
+                            disabled={saving}
+                            className="px-4 py-2 rounded-lg bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 text-sm font-medium hover:bg-orange-100 dark:hover:bg-orange-900/40 transition-colors disabled:opacity-50"
+                        >
+                            {saving ? 'Saving...' : 'Save'}
+                        </button>
                     </div>
-                    <div className="space-y-3">
-                        {profileData.documents.map((doc) => (
-                            <div key={doc.id} className="flex items-center justify-between p-4 border border-gray-100 dark:border-gray-700 rounded-xl hover:border-orange-100 transition-colors">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-lg bg-red-50 flex items-center justify-center text-red-500 font-bold text-xs">PDF</div>
-                                    <div>
-                                        <p className="text-sm font-medium text-gray-900 dark:text-gray-100">{doc.name}</p>
-                                        <p className="text-xs text-gray-500 dark:text-gray-400">{doc.type} • Added {doc.date}</p>
-                                    </div>
-                                </div>
-                                <button className="text-gray-400 hover:text-red-500 transition-colors">
-                                    <span className="sr-only">Delete</span>
-                                    ×
-                                </button>
+
+                    <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+                        <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-6">Resume</h3>
+
+                        <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-8 hover:border-orange-500 dark:hover:border-orange-400 transition-colors bg-gray-50 dark:bg-gray-900/50">
+                            <div className="w-16 h-16 bg-orange-100 dark:bg-orange-900/30 rounded-full flex items-center justify-center mb-4">
+                                <Upload className="w-8 h-8 text-orange-600 dark:text-orange-400" />
                             </div>
-                        ))}
+
+                            {profileData.resumeFileName ? (
+                                <div className="text-center mb-4">
+                                    <p className="text-gray-800 dark:text-gray-100 font-medium mb-1">Current Resume:</p>
+                                    <p className="text-orange-600 dark:text-orange-400 font-semibold">{profileData.resumeFileName}</p>
+                                </div>
+                            ) : (
+                                <p className="text-gray-500 dark:text-gray-400 mb-6 text-center">
+                                    Upload your resume to get better job recommendations and ATS analysis
+                                </p>
+                            )}
+
+                            <div className="flex gap-4">
+                                <button
+                                    onClick={() => document.getElementById('resume-upload-profile')?.click()}
+                                    className="px-6 py-2.5 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200 rounded-xl font-medium hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors shadow-sm"
+                                >
+                                    {profileData.resumeFileName ? 'Update Resume' : 'Upload Resume'}
+                                </button>
+                                <input
+                                    id="resume-upload-profile"
+                                    type="file"
+                                    className="hidden"
+                                    accept=".pdf,.doc,.docx"
+                                    onChange={(e) => {
+                                        const file = e.target.files?.[0];
+                                        if (file) {
+                                            if (file.size > 2 * 1024 * 1024) {
+                                                showToast('File size must be less than 2MB', 'error');
+                                                return;
+                                            }
+
+                                            const reader = new FileReader();
+                                            reader.onload = (event) => {
+                                                const base64String = event.target?.result as string;
+                                                setProfileData(prev => ({
+                                                    ...prev,
+                                                    resumeFile: base64String,
+                                                    resumeFileName: file.name
+                                                }));
+                                                showToast('Resume selected. Click Save to upload.', 'success');
+                                            };
+                                            reader.readAsDataURL(file);
+                                        }
+                                    }}
+                                />
+                            </div>
+                            <p className="text-xs text-gray-400 dark:text-gray-500 mt-4">
+                                Supported formats: PDF, DOC, DOCX (Max 2MB)
+                            </p>
+                        </div>
                     </div>
                 </section>
 
                 {/* 10. Extra Sections */}
                 <section id="extra" className="bg-white dark:bg-gray-800 p-6 rounded-3xl shadow-sm dark:shadow-gray-900/50 scroll-mt-24 transition-colors">
                     <div className="flex justify-between items-center mb-6">
-                        <h2 className="text-xl font-semibold text-gray-700 flex items-center gap-2">
+                        <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-200 flex items-center gap-2">
                             <span className="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center text-sm">10</span>
                             Add Section
                         </h2>
@@ -988,7 +1028,7 @@ const ProfileContent = () => {
                             type="button"
                             onClick={() => handleSave('extra')}
                             disabled={saving}
-                            className="px-4 py-2 rounded-lg bg-orange-50 text-orange-600 text-sm font-medium hover:bg-orange-100 transition-colors disabled:opacity-50"
+                            className="px-4 py-2 rounded-lg bg-orange-50 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400 text-sm font-medium hover:bg-orange-100 dark:hover:bg-orange-900/40 transition-colors disabled:opacity-50"
                         >
                             {saving ? 'Saving...' : 'Save'}
                         </button>

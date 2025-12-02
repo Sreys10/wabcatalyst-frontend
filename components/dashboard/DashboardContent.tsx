@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Legend } from 'recharts';
-import { MoreHorizontal, Sparkles, Download, Upload, FileText, Bell, MessageSquare, Clock, Briefcase, Bookmark, BookOpen, Video, TrendingUp } from 'lucide-react';
+import { MoreHorizontal, Sparkles, Download, Upload, FileText, Bell, MessageSquare, Clock, Briefcase, Bookmark, BookOpen, Video, TrendingUp, CheckCircle, AlertTriangle } from 'lucide-react';
 import { useTheme } from '@layouts/partials/ThemeProvider';
 
 const DashboardContent = () => {
@@ -17,6 +17,9 @@ const DashboardContent = () => {
     const [missingSections, setMissingSections] = useState<string[]>([]);
     const [atsScore, setAtsScore] = useState(0);
     const [loading, setLoading] = useState(true);
+    const [hasResume, setHasResume] = useState(false);
+    const [atsReport, setAtsReport] = useState<any>(null);
+    const fileInputRef = React.useRef<HTMLInputElement>(null);
 
     useEffect(() => {
         const fetchProfileData = async () => {
@@ -27,8 +30,22 @@ const DashboardContent = () => {
                         const profile = await res.json();
                         calculateScores(profile);
 
-                        // Fetch ATS score from backend
-                        fetchATSScore();
+                        // Check if resume exists
+                        const resumeExists = !!(profile.resumeFileName || profile.resumeFile);
+                        setHasResume(resumeExists);
+
+                        // Fetch ATS score from backend if profile is complete enough or resume exists
+                        // We'll calculate score locally first to check completion
+                        // Note: calculateScores sets state, but we can't access updated state immediately here
+                        // So we re-calculate completion score logic briefly or rely on resumeExists
+
+                        // We need to know completion score here to decide whether to fetch ATS
+                        // Let's refactor calculateScores to return the score
+                        const score = calculateCompletionScore(profile);
+
+                        if (score >= 70 || resumeExists) {
+                            fetchATSScore();
+                        }
                     }
                 } catch (error) {
                     console.error("Error fetching profile for dashboard:", error);
@@ -41,18 +58,93 @@ const DashboardContent = () => {
         fetchProfileData();
     }, [session]);
 
+    const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        if (file.size > 2 * 1024 * 1024) {
+            alert("File size must be less than 2MB");
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = async (event) => {
+            const base64String = event.target?.result as string;
+
+            try {
+                // Save resume to profile
+                const res = await fetch('/api/onboarding/save', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        resumeFile: base64String,
+                        resumeFileName: file.name
+                    })
+                });
+
+                if (res.ok) {
+                    setHasResume(true);
+                    // Trigger ATS calculation
+                    fetchATSScore();
+                } else {
+                    console.error("Failed to upload resume");
+                }
+            } catch (error) {
+                console.error("Error uploading resume:", error);
+            }
+        };
+        reader.readAsDataURL(file);
+    };
+
     const fetchATSScore = async () => {
         try {
-            const res = await fetch('/api/ats/calculate');
+            const res = await fetch('/api/ats/calculate', {
+                method: 'POST', // Trigger calculation
+            });
             if (res.ok) {
                 const data = await res.json();
                 if (data.success && data.data) {
                     setAtsScore(data.data.score.total);
+                    setAtsReport(data.data); // Store full report data
                 }
             }
         } catch (error) {
             console.error("Error fetching ATS score:", error);
         }
+    };
+
+    // Helper to calculate score without setting state (for useEffect)
+    const calculateCompletionScore = (profile: any) => {
+        let filledCount = 0;
+        let totalCount = 0;
+
+        const check = (val: any) => {
+            totalCount++;
+            if (val && val.toString().trim() !== '') filledCount++;
+        };
+
+        check(profile.personal?.fullName);
+        check(profile.personal?.email);
+        check(profile.personal?.phone);
+        check(profile.personal?.location);
+        check(profile.personal?.photo);
+        check(profile.summary?.bio);
+        check(profile.summary?.jobTitles);
+        check(profile.skills?.primary);
+        check(profile.skills?.tools);
+        check(profile.skills?.soft);
+
+        // Arrays
+        totalCount++; if (profile.experience?.length > 0) filledCount++;
+        totalCount++; if (profile.education?.length > 0) filledCount++;
+        totalCount++; if (profile.projects?.length > 0) filledCount++;
+        totalCount++; if (profile.certifications?.length > 0) filledCount++;
+
+        check(profile.preferences?.jobType);
+        check(profile.preferences?.roles);
+        check(profile.preferences?.location);
+
+        return totalCount > 0 ? Math.round((filledCount / totalCount) * 100) : 0;
     };
 
     const calculateScores = (profile: any) => {
@@ -381,36 +473,127 @@ const DashboardContent = () => {
 
                 {/* Resume Strength Score */}
                 <div className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm dark:shadow-gray-900/50 border border-gray-100 dark:border-gray-700 transition-colors">
-                    <div className="flex justify-between items-start mb-4">
+                    <div className="flex justify-between items-start mb-6">
                         <div>
-                            <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100">Resume Strength score/ATS score</h3>
-                            <div className="text-xl font-medium text-orange-500 dark:text-orange-400 mt-2 border border-orange-200 dark:border-orange-800 rounded px-2 py-1 inline-block bg-orange-50 dark:bg-orange-900/30">Score:- {atsScore}/100</div>
+                            <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100">ATS Score Analysis</h3>
+                            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Resume optimization score</p>
                         </div>
-                        <button className="px-4 py-2 bg-orange-50 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 rounded-lg text-sm font-medium hover:bg-orange-100 dark:hover:bg-orange-900/50 transition-colors">
-                            View Report
-                        </button>
+                        {(completionScore >= 70 || hasResume) && (
+                            <button
+                                onClick={() => router.push('/dashboard/ats-report')}
+                                className="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm"
+                            >
+                                View Full Report
+                            </button>
+                        )}
                     </div>
 
-                    <div className="relative h-64 w-full flex items-center justify-center">
-                        <ResponsiveContainer width="100%" height="100%">
-                            <PieChart>
-                                <Pie
-                                    data={strengthData}
-                                    cx="50%"
-                                    cy="50%"
-                                    innerRadius={60}
-                                    outerRadius={80}
-                                    startAngle={90}
-                                    endAngle={-270}
-                                    dataKey="value"
-                                    stroke="none"
+                    <div className="relative w-full">
+                        {(completionScore >= 70 || hasResume) ? (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {/* Left: Score Circle */}
+                                <div className="flex flex-col items-center justify-center p-4">
+                                    <div className="relative w-48 h-48">
+                                        {/* Circular Progress */}
+                                        <svg className="w-full h-full transform -rotate-90" viewBox="0 0 200 200">
+                                            {/* Background circle */}
+                                            <circle
+                                                cx="100"
+                                                cy="100"
+                                                r="85"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                strokeWidth="16"
+                                                className="text-gray-200 dark:text-gray-700"
+                                            />
+                                            {/* Progress circle */}
+                                            <circle
+                                                cx="100"
+                                                cy="100"
+                                                r="85"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                strokeWidth="16"
+                                                strokeLinecap="round"
+                                                className="text-orange-500 transition-all duration-1000"
+                                                strokeDasharray={`${(atsScore / 100) * 534} 534`}
+                                            />
+                                        </svg>
+                                        <div className="absolute inset-0 flex flex-col items-center justify-center">
+                                            <span className="text-5xl font-bold text-gray-800 dark:text-white">{atsScore}</span>
+                                            <span className="text-sm text-gray-500 dark:text-gray-400 mt-1">out of 100</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Right: Stats & Info */}
+                                <div className="flex flex-col justify-center space-y-4">
+                                    {/* Quick Stats */}
+                                    {atsReport && atsReport.score && (
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div className="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-900/10 p-4 rounded-xl border border-orange-200 dark:border-orange-800">
+                                                <p className="text-xs font-medium text-orange-600 dark:text-orange-400 mb-1">Grade</p>
+                                                <p className="text-3xl font-bold text-orange-600 dark:text-orange-400">{atsReport.score.grade}</p>
+                                            </div>
+                                            <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/20 dark:to-blue-900/10 p-4 rounded-xl border border-blue-200 dark:border-blue-800">
+                                                <p className="text-xs font-medium text-blue-600 dark:text-blue-400 mb-1">Percentile</p>
+                                                <p className="text-3xl font-bold text-blue-600 dark:text-blue-400">Top {100 - atsReport.score.percentile}%</p>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    {/* Insights Preview */}
+                                    {atsReport && (
+                                        <div className="space-y-3">
+                                            <div className="flex items-center gap-2">
+                                                <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                                                <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">Quick Insights</span>
+                                            </div>
+                                            {atsReport.strengths && atsReport.strengths[0] && (
+                                                <div className="flex items-start gap-3 p-3 bg-green-50 dark:bg-green-900/10 rounded-lg border border-green-200 dark:border-green-800">
+                                                    <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
+                                                    <p className="text-xs text-gray-700 dark:text-gray-300 line-clamp-2">{atsReport.strengths[0]}</p>
+                                                </div>
+                                            )}
+                                            {atsReport.weaknesses && atsReport.weaknesses[0] && (
+                                                <div className="flex items-start gap-3 p-3 bg-red-50 dark:bg-red-900/10 rounded-lg border border-red-200 dark:border-red-800">
+                                                    <AlertTriangle className="w-4 h-4 text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0" />
+                                                    <p className="text-xs text-gray-700 dark:text-gray-300 line-clamp-2">{atsReport.weaknesses[0]}</p>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
+
+                                    {/* Complete Profile Message */}
+                                    <div className="text-xs text-gray-500 dark:text-gray-400 italic border-l-2 border-orange-500 pl-3">
+                                        Complete and well-structured profile. Minor optimizations possible for maximum ATS score.
+                                    </div>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="flex flex-col items-center justify-center text-center p-8 h-64">
+                                <div className="w-20 h-20 bg-gradient-to-br from-orange-100 to-orange-200 dark:from-orange-900/30 dark:to-orange-800/20 rounded-full flex items-center justify-center mb-4">
+                                    <Upload className="w-10 h-10 text-orange-600 dark:text-orange-400" />
+                                </div>
+                                <h4 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-2">Get Your ATS Score</h4>
+                                <p className="text-sm text-gray-500 dark:text-gray-400 mb-6 max-w-sm">
+                                    Upload your resume or complete your profile to receive an instant ATS score analysis
+                                </p>
+                                <button
+                                    onClick={() => fileInputRef.current?.click()}
+                                    className="px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white rounded-xl font-medium transition-all shadow-lg shadow-orange-200 dark:shadow-orange-900/20 transform hover:-translate-y-0.5"
                                 >
-                                    {strengthData.map((entry, index) => (
-                                        <Cell key={`cell-${index}`} fill={STRENGTH_COLORS[index % STRENGTH_COLORS.length]} />
-                                    ))}
-                                </Pie>
-                            </PieChart>
-                        </ResponsiveContainer>
+                                    Upload Resume Now
+                                </button>
+                                <input
+                                    type="file"
+                                    ref={fileInputRef}
+                                    className="hidden"
+                                    accept=".pdf,.doc,.docx"
+                                    onChange={handleFileUpload}
+                                />
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
@@ -620,4 +803,3 @@ const DashboardContent = () => {
 };
 
 export default DashboardContent;
-

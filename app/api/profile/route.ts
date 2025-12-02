@@ -81,6 +81,8 @@ export async function GET(req: Request) {
                 salary: userProfile.expectedSalary || "",
                 noticePeriod: userProfile.noticePeriod || "",
             },
+            resumeFileName: userProfile.resumeFileName || "",
+            resumeFile: userProfile.resumeFile || "",
         };
 
         return NextResponse.json(mappedProfile);
@@ -111,6 +113,9 @@ export async function POST(req: Request) {
             linkedIn: data.personal?.linkedin,
             portfolio: data.personal?.portfolio,
             profileImage: data.personal?.photo,
+
+            resumeFileName: data.resumeFileName,
+            resumeFile: data.resumeFile,
 
             professionalSummary: data.summary?.bio,
             preferredRoles: data.summary?.jobTitles?.split(",").map((s: string) => s.trim()).filter(Boolean),
