@@ -1,14 +1,29 @@
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Search, Bell, ChevronDown, Moon, Sun } from 'lucide-react';
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 import { useTheme } from '@layouts/partials/ThemeProvider';
 
 const Header = () => {
     const { data: session } = useSession();
     const { theme, toggleTheme } = useTheme();
     const user = session?.user;
+    const [isProfileOpen, setIsProfileOpen] = useState(false);
+    const [profileData, setProfileData] = useState(null);
+
+    useEffect(() => {
+        if (isProfileOpen && !profileData) {
+            fetch('/api/profile')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        setProfileData(data.profile);
+                    }
+                })
+                .catch(err => console.error("Failed to fetch profile:", err));
+        }
+    }, [isProfileOpen, profileData]);
 
     // Get initials from name
     const getInitials = (name) => {
@@ -47,19 +62,72 @@ const Header = () => {
                     )}
                 </button>
 
-                <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-400 font-semibold overflow-hidden">
-                        {user?.image ? (
-                            <img src={user.image} alt={user.name} className="w-full h-full object-cover" />
-                        ) : (
-                            getInitials(user?.name)
-                        )}
-                    </div>
-                    <div className="hidden md:block">
-                        <div className="text-sm font-semibold text-gray-700 dark:text-gray-200">{user?.name || 'Guest User'}</div>
-                        <div className="text-xs text-gray-500 dark:text-gray-400">{user?.email || 'Please log in'}</div>
-                    </div>
-                    <ChevronDown className="w-4 h-4 text-gray-400 dark:text-gray-500" />
+                <div className="relative">
+                    <button
+                        onClick={() => setIsProfileOpen(!isProfileOpen)}
+                        className="flex items-center gap-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 p-2 rounded-xl transition-all"
+                    >
+                        <div className="w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-400 font-semibold overflow-hidden border border-orange-200 dark:border-orange-800">
+                            {user?.image ? (
+                                <img src={user.image} alt={user.name} className="w-full h-full object-cover" />
+                            ) : (
+                                getInitials(user?.name)
+                            )}
+                        </div>
+                        <div className="hidden md:block text-left">
+                            <div className="text-sm font-semibold text-gray-700 dark:text-gray-200">{user?.name || 'Guest User'}</div>
+                            <div className="text-xs text-gray-500 dark:text-gray-400">{user?.email || 'Please log in'}</div>
+                        </div>
+                        <ChevronDown className={`w-4 h-4 text-gray-400 dark:text-gray-500 transition-transform duration-200 ${isProfileOpen ? 'rotate-180' : ''}`} />
+                    </button>
+
+                    {/* Profile Dropdown */}
+                    {isProfileOpen && (
+                        <>
+                            <div
+                                className="fixed inset-0 z-40"
+                                onClick={() => setIsProfileOpen(false)}
+                            />
+                            <div className="absolute right-0 mt-2 w-72 bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 z-50 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+                                <div className="p-6 flex flex-col items-center border-b border-gray-100 dark:border-gray-700 bg-gray-50/50 dark:bg-gray-800/50">
+                                    <div className="w-20 h-20 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-400 text-2xl font-bold overflow-hidden mb-3 border-4 border-white dark:border-gray-700 shadow-sm">
+                                        {user?.image ? (
+                                            <img src={user.image} alt={user.name} className="w-full h-full object-cover" />
+                                        ) : (
+                                            getInitials(user?.name)
+                                        )}
+                                    </div>
+                                    <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100">{user?.name}</h3>
+                                    <p className="text-sm text-gray-500 dark:text-gray-400">{user?.email}</p>
+                                    {profileData?.personal?.phone && (
+                                        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1 flex items-center gap-1">
+                                            <span>📞</span> {profileData.personal.phone}
+                                        </p>
+                                    )}
+                                </div>
+                                <div className="p-2">
+                                    <button
+                                        onClick={() => {
+                                            // Navigate to profile
+                                            window.location.href = '/dashboard/profile';
+                                        }}
+                                        className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-xl transition-colors"
+                                    >
+                                        View Profile
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            // Sign out logic here if needed, or just close
+                                            setIsProfileOpen(false);
+                                        }}
+                                        className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-colors"
+                                    >
+                                        Sign Out
+                                    </button>
+                                </div>
+                            </div>
+                        </>
+                    )}
                 </div>
                 <button className="relative p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-full transition-colors group">
                     <Bell className="w-5 h-5 text-gray-500 dark:text-gray-400 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors" />

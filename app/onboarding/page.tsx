@@ -49,7 +49,8 @@ const Onboarding = () => {
         tools: [],
 
         // Step 4: Resume
-        resumeFile: null // Will store file object or URL string
+        resumeFile: null, // Will store file object or URL string
+        resumeFileName: '' // Store file name for display
     });
 
     const countryCodes = [
@@ -388,27 +389,60 @@ const Onboarding = () => {
         </div>
     );
 
+    const fileInputRef = React.useRef(null);
+
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            if (file.size > 2 * 1024 * 1024) { // 2MB limit
+                alert("File size should be less than 2MB");
+                return;
+            }
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setFormData(prev => ({ ...prev, resumeFile: reader.result, resumeFileName: file.name }));
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
     const renderStep4 = () => (
         <div className="space-y-6 animate-fadeIn text-center py-10">
-            <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-2xl p-10 flex flex-col items-center justify-center hover:border-orange-500 transition-colors cursor-pointer bg-gray-50 dark:bg-gray-800/50">
+            <div
+                onClick={() => fileInputRef.current?.click()}
+                className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-2xl p-10 flex flex-col items-center justify-center hover:border-orange-500 transition-colors cursor-pointer bg-gray-50 dark:bg-gray-800/50"
+            >
                 <div className="w-16 h-16 bg-orange-100 dark:bg-orange-900/30 text-orange-600 rounded-full flex items-center justify-center mb-4">
                     <Upload className="w-8 h-8" />
                 </div>
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">Upload your Resume</h3>
                 <p className="text-gray-500 dark:text-gray-400 mb-6 max-w-sm">
-                    Drag and drop your resume here, or click to browse. Supported formats: PDF, DOCX (Max 5MB)
+                    Drag and drop your resume here, or click to browse. Supported formats: PDF, DOCX (Max 2MB)
                 </p>
-                <button className="px-6 py-2.5 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors">
-                    Browse Files
-                </button>
-                <input type="file" className="hidden" />
+                {formData.resumeFileName ? (
+                    <div className="flex items-center gap-2 px-4 py-2 bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 rounded-lg">
+                        <FileText className="w-4 h-4" />
+                        <span className="font-medium">{formData.resumeFileName}</span>
+                    </div>
+                ) : (
+                    <button className="px-6 py-2.5 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-lg font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors">
+                        Browse Files
+                    </button>
+                )}
+                <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleFileChange}
+                    accept=".pdf,.doc,.docx"
+                    className="hidden"
+                />
             </div>
 
             <button
                 onClick={() => handleNext()}
                 className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 font-medium"
             >
-                Skip for now
+                {formData.resumeFile ? "Continue" : "Skip for now"}
             </button>
         </div>
     );

@@ -91,6 +91,7 @@ const UserProfileSchema = new mongoose.Schema(
 
     // Resume
     resumeFile: { type: String, trim: true }, // New
+    resumeFileName: { type: String, trim: true }, // New
 
     // Other existing fields...
     linkedIn: { type: String, trim: true },
