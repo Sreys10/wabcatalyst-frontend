@@ -4,7 +4,7 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { signUp } from "../api/auth/actions";
+
 
 const DASHBOARD_ROUTE = "/dashboard";
 

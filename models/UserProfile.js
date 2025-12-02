@@ -73,31 +73,41 @@ const UserProfileSchema = new mongoose.Schema(
     email: { type: String, required: true, trim: true },
     phone: { type: String, trim: true },
     location: { type: String, trim: true },
+    highestQualification: { type: String, trim: true }, // New
+    employmentStatus: { type: String, trim: true }, // New
+    yearsOfExperience: { type: String, trim: true },
+
+    // Job Preferences
+    preferredRoles: [{ type: String, trim: true }], // Changed to array
+    preferredJobType: [{ type: String, trim: true }], // Changed to array
+    preferredLocations: [{ type: String, trim: true }], // New
+    expectedSalary: { type: String, trim: true },
+    noticePeriod: { type: String, trim: true },
+
+    // Skills
+    primarySkills: [{ type: String, trim: true }],
+    secondarySkills: [{ type: String, trim: true }],
+    toolsAndTechnologies: [{ type: String, trim: true }], // Mapped to 'tools'
+
+    // Resume
+    resumeFile: { type: String, trim: true }, // New
+
+    // Other existing fields...
     linkedIn: { type: String, trim: true },
     portfolio: { type: String, trim: true },
     github: { type: String, trim: true },
     profileImage: { type: String, trim: true },
     careerObjective: { type: String, trim: true },
     professionalSummary: { type: String, trim: true },
-    primarySkills: [{ type: String, trim: true }],
-    secondarySkills: [{ type: String, trim: true }],
     softSkills: [{ type: String, trim: true }],
-    toolsAndTechnologies: [{ type: String, trim: true }],
     workExperience: [ExperienceSchema],
     education: [EducationSchema],
     projects: [ProjectSchema],
     certifications: [CertificationSchema],
     languages: [LanguageSchema],
-    preferredJobRole: { type: String, trim: true },
-    preferredLocation: { type: String, trim: true },
-    jobType: {
-      type: String,
-      enum: ["Remote", "Onsite", "Hybrid", ""],
-      default: "",
-    },
-    expectedSalary: { type: String, trim: true },
-    yearsOfExperience: { type: String, trim: true },
-    noticePeriod: { type: String, trim: true },
+    preferredJobRole: { type: String, trim: true }, // Keeping for backward compatibility if needed
+    preferredLocation: { type: String, trim: true }, // Keeping for backward compatibility if needed
+    jobType: { type: String, trim: true }, // Keeping for backward compatibility
     strengths: [{ type: String, trim: true }],
     hobbies: [{ type: String, trim: true }],
     awards: [{ type: String, trim: true }],

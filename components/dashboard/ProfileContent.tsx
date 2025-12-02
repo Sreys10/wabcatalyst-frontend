@@ -3,12 +3,48 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSession } from 'next-auth/react';
 import { Camera, Plus, Trash2, Upload, ChevronDown, ChevronUp, CheckCircle, AlertCircle, X } from 'lucide-react';
-import { mockProfileData } from '../../data/mockProfile';
+
+const initialProfileData = {
+    personal: {
+        fullName: "",
+        email: "",
+        phone: "",
+        location: "",
+        linkedin: "",
+        portfolio: "",
+        photo: "",
+    },
+    summary: {
+        bio: "",
+        jobTitles: "",
+    },
+    skills: {
+        primary: "",
+        tools: "",
+        soft: "",
+    },
+    experience: [],
+    education: [],
+    projects: [],
+    certifications: [],
+    preferences: {
+        jobType: "",
+        roles: "",
+        location: "",
+        salary: "",
+        noticePeriod: "",
+    },
+    documents: [],
+    extras: {
+        strengths: "",
+        hobbies: "",
+    },
+};
 
 const ProfileContent = () => {
-    const { data: session } = useSession();
+    const { data: session, update } = useSession();
     const [activeSection, setActiveSection] = useState('personal');
-    const [profileData, setProfileData] = useState(mockProfileData);
+    const [profileData, setProfileData] = useState(initialProfileData);
     const [loading, setLoading] = useState(true);
 
     // Autocomplete states
@@ -16,7 +52,7 @@ const ProfileContent = () => {
     const [showPrimarySkillsDropdown, setShowPrimarySkillsDropdown] = useState(false);
     const [showToolsDropdown, setShowToolsDropdown] = useState(false);
     const [showSoftSkillsDropdown, setShowSoftSkillsDropdown] = useState(false);
-    const [bioText, setBioText] = useState(mockProfileData.summary.bio || '');
+    const [bioText, setBioText] = useState('');
 
     const jobTitleRef = useRef<HTMLDivElement>(null);
     const primarySkillsRef = useRef<HTMLDivElement>(null);
@@ -158,6 +194,10 @@ const ProfileContent = () => {
 
             if (res.ok) {
                 showToast('Profile saved successfully!', 'success');
+                // Update session if photo was changed
+                if (sectionName === 'personal' && updatedProfileData.personal.photo) {
+                    await update({ image: updatedProfileData.personal.photo });
+                }
             } else {
                 showToast('Failed to save profile.', 'error');
             }
@@ -175,8 +215,8 @@ const ProfileContent = () => {
                 const res = await fetch('/api/profile');
                 if (res.ok) {
                     const data = await res.json();
-                    // Merge with mock data structure to ensure all fields exist
-                    const mergedData = { ...mockProfileData, ...data };
+                    // Merge with initial data structure to ensure all fields exist
+                    const mergedData = { ...initialProfileData, ...data };
                     setProfileData(mergedData);
 
                     // Sync local states
@@ -263,7 +303,7 @@ const ProfileContent = () => {
                         {/* Profile Photo */}
                         <div className="flex flex-col items-center gap-3">
                             <div
-                                className="w-32 h-32 rounded-full bg-gray-100 border-4 border-white shadow-md flex items-center justify-center relative overflow-hidden group cursor-pointer"
+                                className="w-24 h-24 rounded-full bg-gray-100 border-4 border-white shadow-md flex items-center justify-center relative overflow-hidden group cursor-pointer"
                                 onClick={() => fileInputRef.current?.click()}
                             >
                                 {profileData.personal.photo || session?.user?.image ? (
@@ -295,7 +335,7 @@ const ProfileContent = () => {
                                     type="text"
                                     value={profileData.personal.location}
                                     onChange={(e) => handleInputChange('personal', 'location', e.target.value)}
-                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all capitalize"
+                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all capitalize placeholder-gray-300 dark:placeholder-gray-600"
                                     style={{ textTransform: 'capitalize' }}
                                     placeholder="New York, USA"
                                 />
@@ -306,7 +346,7 @@ const ProfileContent = () => {
                                     type="url"
                                     value={profileData.personal.linkedin}
                                     onChange={(e) => handleInputChange('personal', 'linkedin', e.target.value)}
-                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all"
+                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all placeholder-gray-300 dark:placeholder-gray-600"
                                     placeholder="linkedin.com/in/johndoe"
                                 />
                             </div>
@@ -316,7 +356,7 @@ const ProfileContent = () => {
                                     type="url"
                                     value={profileData.personal.portfolio}
                                     onChange={(e) => handleInputChange('personal', 'portfolio', e.target.value)}
-                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all"
+                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all placeholder-gray-300 dark:placeholder-gray-600"
                                     placeholder="johndoe.com"
                                 />
                             </div>
@@ -352,7 +392,7 @@ const ProfileContent = () => {
                                         const capitalized = val.charAt(0).toUpperCase() + val.slice(1);
                                         setBioText(capitalized);
                                     }}
-                                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all min-h-[120px]"
+                                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all min-h-[120px] placeholder-gray-300 dark:placeholder-gray-600"
                                     placeholder="I am a passionate software engineer with 5 years of experience..."
                                 />
                                 <div className={`text-xs text-right mt-1 ${bioText.split(/\s+/).filter(w => w).length < 50 ? 'text-red-500' : 'text-green-600'}`}>
@@ -371,7 +411,7 @@ const ProfileContent = () => {
                                         e.target.value = e.target.value;
                                         setShowJobTitleDropdown(true);
                                     }}
-                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all"
+                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all placeholder-gray-300 dark:placeholder-gray-600"
                                     placeholder="e.g. Frontend Developer, Full Stack Engineer"
                                 />
                                 {showJobTitleDropdown && (
@@ -431,7 +471,7 @@ const ProfileContent = () => {
                                         e.target.value = e.target.value;
                                         setShowPrimarySkillsDropdown(true);
                                     }}
-                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all"
+                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all placeholder-gray-300 dark:placeholder-gray-600"
                                     placeholder="React, TypeScript, Node.js"
                                 />
                                 {showPrimarySkillsDropdown && (
@@ -471,7 +511,7 @@ const ProfileContent = () => {
                                         e.target.value = e.target.value;
                                         setShowToolsDropdown(true);
                                     }}
-                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all"
+                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all placeholder-gray-300 dark:placeholder-gray-600"
                                     placeholder="VS Code, Git, Figma"
                                 />
                                 {showToolsDropdown && (
@@ -511,7 +551,7 @@ const ProfileContent = () => {
                                         e.target.value = e.target.value;
                                         setShowSoftSkillsDropdown(true);
                                     }}
-                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all"
+                                    className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 outline-none transition-all placeholder-gray-300 dark:placeholder-gray-600"
                                     placeholder="Leadership, Communication"
                                 />
                                 {showSoftSkillsDropdown && (
@@ -575,7 +615,7 @@ const ProfileContent = () => {
                                         type="text"
                                         value={exp.title}
                                         onChange={(e) => handleArrayInputChange('experience', index, 'title', e.target.value)}
-                                        className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm"
+                                        className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm placeholder-gray-300 dark:placeholder-gray-600"
                                         placeholder="Job Title"
                                         onFocus={() => {
                                             // Close other dropdowns
@@ -614,7 +654,7 @@ const ProfileContent = () => {
                                     type="text"
                                     value={exp.company}
                                     onChange={(e) => handleArrayInputChange('experience', index, 'company', e.target.value)}
-                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm"
+                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm placeholder-gray-300 dark:placeholder-gray-600"
                                     placeholder="Company Name"
                                 />
                                 <div className="flex gap-4">
@@ -622,14 +662,14 @@ const ProfileContent = () => {
                                         type="date"
                                         value={exp.startDate}
                                         onChange={(e) => handleArrayInputChange('experience', index, 'startDate', e.target.value)}
-                                        className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm text-gray-500"
+                                        className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm text-gray-500 placeholder-gray-300 dark:placeholder-gray-600"
                                         placeholder="Start Date"
                                     />
                                     <input
                                         type="date"
                                         value={exp.endDate}
                                         onChange={(e) => handleArrayInputChange('experience', index, 'endDate', e.target.value)}
-                                        className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm text-gray-500"
+                                        className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm text-gray-500 placeholder-gray-300 dark:placeholder-gray-600"
                                         placeholder="End Date"
                                     />
                                 </div>
@@ -637,14 +677,14 @@ const ProfileContent = () => {
                                     type="text"
                                     value={exp.location}
                                     onChange={(e) => handleArrayInputChange('experience', index, 'location', e.target.value)}
-                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm"
+                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm placeholder-gray-300 dark:placeholder-gray-600"
                                     placeholder="Location"
                                 />
                             </div>
                             <textarea
                                 value={exp.description}
                                 onChange={(e) => handleArrayInputChange('experience', index, 'description', e.target.value)}
-                                className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm min-h-[80px]"
+                                className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm min-h-[80px] placeholder-gray-300 dark:placeholder-gray-600"
                                 placeholder="Responsibilities & Achievements..."
                             />
                         </div>
@@ -684,7 +724,7 @@ const ProfileContent = () => {
                                         type="text"
                                         value={edu.degree}
                                         onChange={(e) => handleArrayInputChange('education', index, 'degree', e.target.value)}
-                                        className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm"
+                                        className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm placeholder-gray-300 dark:placeholder-gray-600"
                                         placeholder="Degree / Qualification"
                                         onFocus={() => {
                                             const dropdown = document.getElementById(`degree-dropdown-${index}`);
@@ -713,21 +753,21 @@ const ProfileContent = () => {
                                     type="text"
                                     value={edu.institution}
                                     onChange={(e) => handleArrayInputChange('education', index, 'institution', e.target.value)}
-                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm"
+                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm placeholder-gray-300 dark:placeholder-gray-600"
                                     placeholder="University / Institution"
                                 />
                                 <input
                                     type="text"
                                     value={edu.year}
                                     onChange={(e) => handleArrayInputChange('education', index, 'year', e.target.value)}
-                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm"
+                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm placeholder-gray-300 dark:placeholder-gray-600"
                                     placeholder="Year of Passing"
                                 />
                                 <input
                                     type="text"
                                     value={edu.grade}
                                     onChange={(e) => handleArrayInputChange('education', index, 'grade', e.target.value)}
-                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm"
+                                    className="w-full px-4 py-2 rounded-lg border border-gray-200 text-sm placeholder-gray-300 dark:placeholder-gray-600"
                                     placeholder="CGPA / Percentage"
                                 />
                             </div>

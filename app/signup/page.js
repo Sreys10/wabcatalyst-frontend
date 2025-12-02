@@ -4,7 +4,7 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { signUp } from "../api/auth/actions";
+
 
 export default function SignupPage() {
     const router = useRouter();
@@ -31,9 +31,16 @@ export default function SignupPage() {
         setLoading(true);
 
         try {
-            const result = await signUp(email, password, name);
-            if (result?.error) {
-                setError(result.error);
+            const res = await fetch("/api/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password, name }),
+            });
+
+            const result = await res.json();
+
+            if (!res.ok || result.error) {
+                setError(result.error || "Failed to sign up");
                 setLoading(false);
                 return;
             }
