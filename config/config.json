@@ -3,7 +3,7 @@
     "title": "WabCatalyst",
     "base_url": "/",
     "favicon": "/images/favicon.png",
-    "logo": "/logo.png",
+    "logo": "/images/logo.png",
     "logo_width": "40",
     "logo_height": "40",
     "logo_text": "WabCatalyst"
@@ -18,11 +18,12 @@
     "label": "Get Started",
     "link": "/login"
   },
+  "api": {},
   "params": {
     "contact_form_action": "https://formsubmit.co/info@wabcatalyst.com",
     "tag_manager_id": "",
-    "footer_content": "Lorem ipsum dolor sit amet, consectetur elit. Consjat tristique eget amet, tempus eu at cttur.",
-    "copyright": "Designed and Developed By [Themefisher](https://themefisher.com/)"
+    "footer_content": "Empowering professionals to achieve their career goals through personalized guidance, resume optimization, and direct company connections.",
+    "copyright": "© 2025 WabCatalyst. All rights reserved."
   },
   "metadata": {
     "meta_author": "Themefisher",

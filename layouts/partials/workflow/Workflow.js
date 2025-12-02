@@ -7,7 +7,7 @@ const Workflow = ({ workflow }) => {
   }
 
   return (
-    <section id="workflow" className="relative py-20 md:py-28 bg-gradient-to-b from-white via-amber-50/20 to-white dark:from-gray-900 dark:via-gray-800/30 dark:to-gray-900 overflow-hidden">
+    <section id="workflow" className="relative py-20 md:py-28 bg-orange-50/30 dark:bg-gray-900 overflow-hidden">
       {/* Decorative background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-10 left-10 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>

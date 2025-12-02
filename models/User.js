@@ -23,6 +23,14 @@ const UserSchema = new mongoose.Schema(
       enum: ["credentials", "google"],
       default: "credentials",
     },
+    onboardingCompleted: {
+      type: Boolean,
+      default: false,
+    },
+    onboardingData: {
+      type: Object,
+      default: {},
+    },
   },
   { timestamps: true }
 );

@@ -6,6 +6,7 @@ export const mockProfileData = {
         location: "New York, USA",
         linkedin: "linkedin.com/in/johndoe",
         portfolio: "johndoe.com",
+        photo: "",
     },
     summary: {
         bio: "I am a passionate software engineer with 5 years of experience in building scalable web applications using React, Node.js, and Cloud technologies. I love solving complex problems and mentoring junior developers.",
@@ -62,11 +63,21 @@ export const mockProfileData = {
         },
     ],
     preferences: {
+        jobType: "Full-time",
         roles: "Frontend Developer, Full Stack Developer",
         location: "Remote, New York",
         salary: "$120k - $150k",
         noticePeriod: "30 Days",
     },
+    documents: [
+        {
+            id: 1,
+            name: "Resume.pdf",
+            type: "PDF",
+            date: "2023-10-25",
+            url: "/resume.pdf"
+        }
+    ],
     extras: {
         strengths: "Public Speaking, Technical Writing",
         hobbies: "Photography, Hiking, Chess",

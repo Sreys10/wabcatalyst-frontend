@@ -1,57 +1,255 @@
-/* Force black text for all headings and labels in dashboard and onboarding */
-.dashboard h1,
-.dashboard h2,
-.dashboard h3,
-.dashboard h4,
-.dashboard h5,
-.dashboard h6,
-.dashboard label,
-.onboarding h1,
-.onboarding h2,
-.onboarding h3,
-.onboarding h4,
-.onboarding h5,
-.onboarding h6,
-.onboarding label,
-[class*="dashboard"] h1,
-[class*="dashboard"] h2,
-[class*="dashboard"] h3,
-[class*="dashboard"] h4,
-[class*="dashboard"] h5,
-[class*="dashboard"] h6,
-[class*="dashboard"] label {
+/* Force black text for all headings and labels in dashboard and onboarding - LIGHT MODE ONLY */
+html:not(.dark) .dashboard h1,
+html:not(.dark) .dashboard h2,
+html:not(.dark) .dashboard h3,
+html:not(.dark) .dashboard h4,
+html:not(.dark) .dashboard h5,
+html:not(.dark) .dashboard h6,
+html:not(.dark) .dashboard label,
+html:not(.dark) .onboarding h1,
+html:not(.dark) .onboarding h2,
+html:not(.dark) .onboarding h3,
+html:not(.dark) .onboarding h4,
+html:not(.dark) .onboarding h5,
+html:not(.dark) .onboarding h6,
+html:not(.dark) .onboarding label,
+html:not(.dark) [class*="dashboard"] h1,
+html:not(.dark) [class*="dashboard"] h2,
+html:not(.dark) [class*="dashboard"] h3,
+html:not(.dark) [class*="dashboard"] h4,
+html:not(.dark) [class*="dashboard"] h5,
+html:not(.dark) [class*="dashboard"] h6,
+html:not(.dark) [class*="dashboard"] label {
   color: #000 !important;
 }
 
-/* Force black text for inputs */
-.dashboard input[type="text"],
-.dashboard input[type="email"],
-.dashboard input[type="tel"],
-.dashboard input[type="url"],
-.dashboard textarea,
-.onboarding input[type="text"],
-.onboarding input[type="email"],
-.onboarding input[type="tel"],
-.onboarding input[type="url"],
-.onboarding textarea,
-[class*="dashboard"] input[type="text"],
-[class*="dashboard"] input[type="email"],
-[class*="dashboard"] input[type="tel"],
-[class*="dashboard"] input[type="url"],
-[class*="dashboard"] textarea {
+/* Force black text for inputs - comprehensive selectors - LIGHT MODE ONLY */
+html:not(.dark) .dashboard input[type="text"],
+html:not(.dark) .dashboard input[type="email"],
+html:not(.dark) .dashboard input[type="tel"],
+html:not(.dark) .dashboard input[type="url"],
+html:not(.dark) .dashboard input[type="password"],
+html:not(.dark) .dashboard input[type="number"],
+html:not(.dark) .dashboard input[type="date"],
+html:not(.dark) .dashboard select,
+html:not(.dark) .dashboard textarea,
+html:not(.dark) .onboarding input[type="text"],
+html:not(.dark) .onboarding input[type="email"],
+html:not(.dark) .onboarding input[type="tel"],
+html:not(.dark) .onboarding input[type="url"],
+html:not(.dark) .onboarding input[type="password"],
+html:not(.dark) .onboarding input[type="number"],
+html:not(.dark) .onboarding input[type="date"],
+html:not(.dark) .onboarding select,
+html:not(.dark) .onboarding textarea,
+html:not(.dark) [class*="dashboard"] input[type="text"],
+html:not(.dark) [class*="dashboard"] input[type="email"],
+html:not(.dark) [class*="dashboard"] input[type="tel"],
+html:not(.dark) [class*="dashboard"] input[type="url"],
+html:not(.dark) [class*="dashboard"] input[type="password"],
+html:not(.dark) [class*="dashboard"] input[type="number"],
+html:not(.dark) [class*="dashboard"] input[type="date"],
+html:not(.dark) [class*="dashboard"] select,
+html:not(.dark) [class*="dashboard"] textarea {
+  color: #000 !important;
+  -webkit-text-fill-color: #000 !important;
+  opacity: 1 !important;
+}
+
+/* Additional fix for input placeholders - LIGHT MODE ONLY */
+html:not(.dark) .dashboard input::placeholder,
+html:not(.dark) .dashboard textarea::placeholder,
+html:not(.dark) .onboarding input::placeholder,
+html:not(.dark) .onboarding textarea::placeholder,
+html:not(.dark) [class*="dashboard"] input::placeholder,
+html:not(.dark) [class*="dashboard"] textarea::placeholder {
+  color: #9ca3af !important;
+  opacity: 1 !important;
+}
+
+/* Fix for any remaining gray text in dashboard/profile pages - LIGHT MODE ONLY */
+html:not(.dark) [href^="/dashboard"] h1,
+html:not(.dark) [href^="/dashboard"] h2,
+html:not(.dark) [href^="/dashboard"] h3,
+html:not(.dark) [href^="/dashboard"] h4,
+html:not(.dark) [href^="/dashboard"] label,
+html:not(.dark) body:has([href^="/dashboard"]) h1,
+html:not(.dark) body:has([href^="/dashboard"]) h2,
+html:not(.dark) body:has([href^="/dashboard"]) h3,
+html:not(.dark) body:has([href^="/dashboard"]) h4,
+html:not(.dark) body:has([href^="/dashboard"]) label {
   color: #000 !important;
 }
 
-/* Fix for any remaining gray text in dashboard/profile pages */
-[href^="/dashboard"] h1,
-[href^="/dashboard"] h2,
-[href^="/dashboard"] h3,
-[href^="/dashboard"] h4,
-[href^="/dashboard"] label,
-body:has([href^="/dashboard"]) h1,
-body:has([href^="/dashboard"]) h2,
-body:has([href^="/dashboard"]) h3,
-body:has([href^="/dashboard"]) h4,
-body:has([href^="/dashboard"]) label {
+/* Global fix for all inputs and textareas in profile pages - LIGHT MODE ONLY */
+html:not(.dark) input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+html:not(.dark) textarea,
+html:not(.dark) select {
   color: #000 !important;
+  -webkit-text-fill-color: #000 !important;
+}
+
+/* Ensure autofill doesn't make text transparent */
+html:not(.dark) input:-webkit-autofill,
+html:not(.dark) input:-webkit-autofill:hover,
+html:not(.dark) input:-webkit-autofill:focus,
+html:not(.dark) input:-webkit-autofill:active,
+html:not(.dark) textarea:-webkit-autofill,
+html:not(.dark) textarea:-webkit-autofill:hover,
+/* Force black text for all headings and labels in dashboard and onboarding - LIGHT MODE ONLY */
+html:not(.dark) .dashboard h1,
+html:not(.dark) .dashboard h2,
+html:not(.dark) .dashboard h3,
+html:not(.dark) .dashboard h4,
+html:not(.dark) .dashboard h5,
+html:not(.dark) .dashboard h6,
+html:not(.dark) .dashboard label,
+html:not(.dark) .onboarding h1,
+html:not(.dark) .onboarding h2,
+html:not(.dark) .onboarding h3,
+html:not(.dark) .onboarding h4,
+html:not(.dark) .onboarding h5,
+html:not(.dark) .onboarding h6,
+html:not(.dark) .onboarding label,
+html:not(.dark) [class*="dashboard"] h1,
+html:not(.dark) [class*="dashboard"] h2,
+html:not(.dark) [class*="dashboard"] h3,
+html:not(.dark) [class*="dashboard"] h4,
+html:not(.dark) [class*="dashboard"] h5,
+html:not(.dark) [class*="dashboard"] h6,
+html:not(.dark) [class*="dashboard"] label {
+  color: #000 !important;
+}
+
+/* Force black text for inputs - comprehensive selectors - LIGHT MODE ONLY */
+html:not(.dark) .dashboard input[type="text"],
+html:not(.dark) .dashboard input[type="email"],
+html:not(.dark) .dashboard input[type="tel"],
+html:not(.dark) .dashboard input[type="url"],
+html:not(.dark) .dashboard input[type="password"],
+html:not(.dark) .dashboard input[type="number"],
+html:not(.dark) .dashboard input[type="date"],
+html:not(.dark) .dashboard select,
+html:not(.dark) .dashboard textarea,
+html:not(.dark) .onboarding input[type="text"],
+html:not(.dark) .onboarding input[type="email"],
+html:not(.dark) .onboarding input[type="tel"],
+html:not(.dark) .onboarding input[type="url"],
+html:not(.dark) .onboarding input[type="password"],
+html:not(.dark) .onboarding input[type="number"],
+html:not(.dark) .onboarding input[type="date"],
+html:not(.dark) .onboarding select,
+html:not(.dark) .onboarding textarea,
+html:not(.dark) [class*="dashboard"] input[type="text"],
+html:not(.dark) [class*="dashboard"] input[type="email"],
+html:not(.dark) [class*="dashboard"] input[type="tel"],
+html:not(.dark) [class*="dashboard"] input[type="url"],
+html:not(.dark) [class*="dashboard"] input[type="password"],
+html:not(.dark) [class*="dashboard"] input[type="number"],
+html:not(.dark) [class*="dashboard"] input[type="date"],
+html:not(.dark) [class*="dashboard"] select,
+html:not(.dark) [class*="dashboard"] textarea {
+  color: #000 !important;
+  -webkit-text-fill-color: #000 !important;
+  opacity: 1 !important;
+}
+
+/* Additional fix for input placeholders - LIGHT MODE ONLY */
+html:not(.dark) .dashboard input::placeholder,
+html:not(.dark) .dashboard textarea::placeholder,
+html:not(.dark) .onboarding input::placeholder,
+html:not(.dark) .onboarding textarea::placeholder,
+html:not(.dark) [class*="dashboard"] input::placeholder,
+html:not(.dark) [class*="dashboard"] textarea::placeholder {
+  color: #9ca3af !important;
+  opacity: 1 !important;
+}
+
+/* Fix for any remaining gray text in dashboard/profile pages - LIGHT MODE ONLY */
+html:not(.dark) [href^="/dashboard"] h1,
+html:not(.dark) [href^="/dashboard"] h2,
+html:not(.dark) [href^="/dashboard"] h3,
+html:not(.dark) [href^="/dashboard"] h4,
+html:not(.dark) [href^="/dashboard"] label,
+html:not(.dark) body:has([href^="/dashboard"]) h1,
+html:not(.dark) body:has([href^="/dashboard"]) h2,
+html:not(.dark) body:has([href^="/dashboard"]) h3,
+html:not(.dark) body:has([href^="/dashboard"]) h4,
+html:not(.dark) body:has([href^="/dashboard"]) label {
+  color: #000 !important;
+}
+
+/* Global fix for all inputs and textareas in profile pages - LIGHT MODE ONLY */
+html:not(.dark) input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+html:not(.dark) textarea,
+html:not(.dark) select {
+  color: #000 !important;
+  -webkit-text-fill-color: #000 !important;
+}
+
+/* Ensure autofill doesn't make text transparent */
+html:not(.dark) input:-webkit-autofill,
+html:not(.dark) input:-webkit-autofill:hover,
+html:not(.dark) input:-webkit-autofill:focus,
+html:not(.dark) input:-webkit-autofill:active,
+html:not(.dark) textarea:-webkit-autofill,
+html:not(.dark) textarea:-webkit-autofill:hover,
+html:not(.dark) textarea:-webkit-autofill:focus,
+html:not(.dark) textarea:-webkit-autofill:active {
+  -webkit-text-fill-color: #000 !important;
+  color: #000 !important;
+}
+
+/* DARK MODE OVERRIDES */
+html.dark .dashboard h1,
+html.dark .dashboard h2,
+html.dark .dashboard h3,
+html.dark .dashboard h4,
+html.dark .dashboard h5,
+html.dark .dashboard h6,
+html.dark .dashboard label,
+html.dark [class*="dashboard"] h1,
+html.dark [class*="dashboard"] h2,
+html.dark [class*="dashboard"] h3,
+html.dark [class*="dashboard"] h4,
+html.dark [class*="dashboard"] h5,
+html.dark [class*="dashboard"] h6,
+html.dark [class*="dashboard"] label {
+  color: #f3f4f6 !important;
+  /* gray-100 */
+}
+
+html.dark input,
+html.dark textarea,
+html.dark select {
+  color: #f3f4f6 !important;
+  -webkit-text-fill-color: #f3f4f6 !important;
+  background-color: #1f2937 !important;
+  /* gray-800 - ensure background is dark too */
+  border-color: #374151 !important;
+  /* gray-700 */
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #9ca3af !important;
+  /* gray-400 */
+}
+
+/* Global Dark Mode Safety Net */
+html.dark body {
+  color: #f3f4f6 !important;
+}
+
+html.dark .text-gray-800,
+html.dark .text-gray-700,
+html.dark .text-gray-600,
+html.dark .text-gray-900,
+html.dark .text-slate-900 {
+  color: #f3f4f6 !important;
+}
+
+html.dark .text-gray-500,
+html.dark .text-gray-400 {
+  color: #9ca3af !important;
 }

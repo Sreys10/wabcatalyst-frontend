@@ -18,17 +18,13 @@
     },
     {
       "name": "FAQ",
-      "url": "/faq"
+      "url": "/#faq"
     }
   ],
   "footer": [
     {
       "name": "Company",
       "menu": [
-        {
-          "text": "Pricing",
-          "url": "/pricing"
-        },
         {
           "text": "Quick Start",
           "url": "#"
@@ -45,10 +41,6 @@
         {
           "text": "Platform",
           "url": "#"
-        },
-        {
-          "text": "Pricing",
-          "url": "/pricing"
         }
       ]
     },
@@ -57,7 +49,7 @@
       "menu": [
         {
           "text": "FAQ",
-          "url": "/faq"
+          "url": "/#faq"
         },
         {
           "text": "Privacy Policy",

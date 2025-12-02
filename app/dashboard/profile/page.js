@@ -7,7 +7,7 @@ import ProfileContent from '../../../components/dashboard/ProfileContent';
 
 export default function ProfilePage() {
     return (
-        <div className="flex h-screen bg-gray-50 overflow-hidden font-sans">
+        <div className="flex h-screen bg-gray-50 dark:bg-gray-900 overflow-hidden font-sans transition-colors duration-200">
             <Sidebar />
             <div className="flex-1 flex flex-col min-w-0">
                 <Header />

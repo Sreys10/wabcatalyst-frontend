@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const HomeFeatures = ({ feature }) => {
   return (
-    <section id="features" className="relative py-20 md:py-28 bg-gradient-to-b from-white via-orange-50/30 to-white dark:from-gray-900 dark:via-gray-800/50 dark:to-gray-900 overflow-hidden">
+    <section id="features" className="relative py-20 md:py-28 bg-gray-50 dark:bg-gray-900 overflow-hidden">
       {/* Decorative background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 right-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl"></div>

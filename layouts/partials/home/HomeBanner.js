@@ -3,8 +3,27 @@
 import { markdownify } from "@lib/utils/textConverter";
 import Image from "next/image";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
 const HomeBanner = ({ banner }) => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // Array of images for the slider
+  const sliderImages = [
+    "/images/hero-slide-1.jpg",
+    "/images/hero-slide-2.jpg",
+    banner.image // Original image
+  ];
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === sliderImages.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 5000); // Change image every 5 seconds
+
+    return () => clearInterval(interval);
+  }, [sliderImages.length]);
   return (
     <section id="home" className="relative overflow-hidden bg-gradient-to-br from-orange-50 via-white to-amber-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 pt-12 pb-20 md:pt-16 md:pb-28">
       {/* Decorative background elements */}
@@ -84,18 +103,26 @@ const HomeBanner = ({ banner }) => {
               </div>
             </div>
 
-            {/* Hero Image */}
+            {/* Hero Image Slider */}
             <div className="relative mt-12">
               <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-amber-300/20 dark:from-primary/30 dark:to-amber-300/30 rounded-3xl blur-2xl -z-10 transform scale-105"></div>
-              <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white/50 dark:border-gray-700/50 backdrop-blur-sm">
-                <Image
-                  className="w-full h-auto"
-                  src={banner.image}
-                  width={750}
-                  height={390}
-                  alt="banner image"
-                  priority
-                />
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white/50 dark:border-gray-700/50 backdrop-blur-sm bg-gray-200 dark:bg-gray-800 h-96 md:h-[600px] lg:h-[800px] w-full">
+                {sliderImages.map((src, index) => (
+                  <div
+                    key={index}
+                    className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentImageIndex ? "opacity-100" : "opacity-0"
+                      }`}
+                  >
+                    <Image
+                      className="object-cover"
+                      src={src}
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 1200px"
+                      alt={`Banner slide ${index + 1}`}
+                      priority={index === 0}
+                    />
+                  </div>
+                ))}
               </div>
             </div>
           </div>

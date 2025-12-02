@@ -4,9 +4,13 @@ import Link from "next/link";
 
 function Cta({ cta }) {
   return (
-    <section className="section px-4">
-      <div className="section container rounded-xl shadow">
-        <div className="row  mx-auto items-center justify-center">
+    <section className="section px-4 py-12 md:py-20">
+      <div className="container rounded-3xl shadow-2xl bg-gradient-to-r from-orange-50 to-amber-50 dark:from-gray-800 dark:to-gray-900 border border-orange-100 dark:border-gray-700 p-8 md:p-12 overflow-hidden relative">
+        {/* Decorative elements */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-amber-400/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
+
+        <div className="row relative z-10 mx-auto items-center justify-center gap-8">
           <div className="md:col-5 lg:col-4">
             <Image
               className="w-full"

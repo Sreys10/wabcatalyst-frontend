@@ -15,7 +15,7 @@ const HomeFaq = ({ faq }) => {
   };
 
   return (
-    <section id="faq" className="relative py-20 md:py-28 bg-gradient-to-b from-white via-amber-50/20 to-white dark:from-gray-900 dark:via-gray-800/30 dark:to-gray-900 overflow-hidden">
+    <section id="faq" className="relative py-20 md:py-28 bg-gray-50 dark:bg-gray-800 overflow-hidden">
       {/* Decorative background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 right-10 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
@@ -57,9 +57,8 @@ const HomeFaq = ({ faq }) => {
                   {/* Toggle Icon */}
                   <div className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 dark:bg-primary/20 flex items-center justify-center transition-all duration-300 group-hover:bg-primary/20 dark:group-hover:bg-primary/30">
                     <svg
-                      className={`w-5 h-5 text-primary dark:text-orange-400 transition-transform duration-300 ${
-                        openIndex === index ? "rotate-180" : ""
-                      }`}
+                      className={`w-5 h-5 text-primary dark:text-orange-400 transition-transform duration-300 ${openIndex === index ? "rotate-180" : ""
+                        }`}
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -76,9 +75,8 @@ const HomeFaq = ({ faq }) => {
 
                 {/* FAQ Answer */}
                 <div
-                  className={`overflow-hidden transition-all duration-300 ${
-                    openIndex === index ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"
-                  }`}
+                  className={`overflow-hidden transition-all duration-300 ${openIndex === index ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0"
+                    }`}
                 >
                   <div className="px-6 md:px-8 pb-5 md:pb-6">
                     <div className="pt-2 text-gray-600 dark:text-gray-400 leading-relaxed">

@@ -27,7 +27,7 @@ const Logo = ({ src }) => {
             }}
           />
           {(logo_text || title) && (
-            <span className="font-primary font-bold text-xl text-dark dark:text-gray-100">
+            <span className="font-primary font-bold text-xl text-gray-900 dark:text-white">
               {logo_text || title}
             </span>
           )}

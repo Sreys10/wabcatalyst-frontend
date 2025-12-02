@@ -5,22 +5,25 @@ import connectDB from "@/lib/db";
 import Profile from "@/models/Profile";
 import User from "@/models/User";
 
-export async function GET(req) {
+export async function GET(req: Request) {
     try {
         await connectDB();
-        const session = await getServerSession(authOptions as any);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const session: any = await getServerSession(authOptions as any);
 
         if (!session) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
         }
 
         // Find user by email to get ID
-        const user = await User.findOne({ email: session.user.email });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const user = await (User as any).findOne({ email: session.user.email });
         if (!user) {
             return NextResponse.json({ error: "User not found" }, { status: 404 });
         }
 
-        const profile = await Profile.findOne({ userId: user._id });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const profile = await (Profile as any).findOne({ userId: user._id });
 
         if (!profile) {
             return NextResponse.json({ error: "Profile not found" }, { status: 404 });
@@ -33,10 +36,11 @@ export async function GET(req) {
     }
 }
 
-export async function POST(req) {
+export async function POST(req: Request) {
     try {
         await connectDB();
-        const session = await getServerSession(authOptions as any);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const session: any = await getServerSession(authOptions as any);
 
         if (!session) {
             return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -45,13 +49,15 @@ export async function POST(req) {
         const data = await req.json();
 
         // Find user by email to get ID
-        const user = await User.findOne({ email: session.user.email });
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const user = await (User as any).findOne({ email: session.user.email });
         if (!user) {
             return NextResponse.json({ error: "User not found" }, { status: 404 });
         }
 
         // Upsert profile
-        const profile = await Profile.findOneAndUpdate(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const profile = await (Profile as any).findOneAndUpdate(
             { userId: user._id },
             {
                 userId: user._id,

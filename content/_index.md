@@ -8,7 +8,7 @@ banner:
       link: "/login"
       enable: true
     - label: "Contact Us"
-      link: "/login"
+      link: "/contact"
       enable: true
 
 # feature
@@ -110,7 +110,7 @@ faq:
 # call_to_action
 call_to_action:
   title: Ready to get started?
-  content: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consequat tristique eget amet, tempus eu at consecttur.
+  content: "The future depends on what you do today. – Mahatma Gandhi"
   image: '/images/cta.svg'
   button:
     enable: true

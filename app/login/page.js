@@ -10,32 +10,29 @@ const DASHBOARD_ROUTE = "/dashboard";
 
 export default function LoginPage() {
   const router = useRouter();
-  const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // Parse query params for errors
+  if (typeof window !== "undefined") {
+    const urlParams = new URLSearchParams(window.location.search);
+    const errorParam = urlParams.get("error");
+    if (errorParam === "no_account" && !error) {
+      setError("No account found with this email. Please sign up.");
+    } else if (errorParam === "account_exists" && !error) {
+      setError("User already has an account. Please log in.");
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setLoading(true);
-    const shouldRedirectToProfile = isSignUp;
 
     try {
-      if (isSignUp) {
-        // Sign up
-        const result = await signUp(email, password, name);
-        if (result?.error) {
-          setError(result.error);
-          setLoading(false);
-          return;
-        }
-        // Auto login after signup
-      }
-
-      // Sign in (after signup or direct login)
+      // Sign in
       const result = await signIn("credentials", {
         email,
         password,
@@ -45,8 +42,7 @@ export default function LoginPage() {
       if (result?.error) {
         setError(result.error);
       } else if (result?.ok) {
-        const destination = shouldRedirectToProfile ? "/profile/create" : DASHBOARD_ROUTE;
-        router.push(destination);
+        router.push(DASHBOARD_ROUTE);
         router.refresh();
       }
     } catch (err) {
@@ -56,6 +52,11 @@ export default function LoginPage() {
     }
   };
 
+  const handleGoogleLogin = () => {
+    document.cookie = "auth_intent=login; path=/";
+    signIn("google", { callbackUrl: "/dashboard" });
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-50 via-white to-amber-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
@@ -63,12 +64,10 @@ export default function LoginPage() {
           {/* Header */}
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-              {isSignUp ? "Create Account" : "Welcome Back"}
+              Welcome Back
             </h2>
             <p className="text-gray-600 dark:text-gray-400">
-              {isSignUp
-                ? "Sign up to get started with WabCatalyst"
-                : "Sign in to your account"}
+              Sign in to your account
             </p>
           </div>
 
@@ -76,6 +75,11 @@ export default function LoginPage() {
           {error && (
             <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
               <p className="text-sm text-red-600 dark:text-red-400">{error}</p>
+              {error.includes("sign up") && (
+                <Link href="/signup" className="text-sm text-primary hover:underline mt-1 block">
+                  Go to Signup Page
+                </Link>
+              )}
             </div>
           )}
 
@@ -83,11 +87,7 @@ export default function LoginPage() {
           <div className="mb-6">
             <button
               type="button"
-              onClick={() =>
-                signIn("google", {
-                  callbackUrl: isSignUp ? "http://localhost:3000/profile/create" : "http://localhost:3000/dashboard",
-                })
-              }
+              onClick={handleGoogleLogin}
               disabled={loading}
               className="w-full flex items-center justify-center gap-3 px-4 py-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-semibold hover:bg-gray-50 dark:hover:bg-gray-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
             >
@@ -113,7 +113,7 @@ export default function LoginPage() {
                   fill="#EA4335"
                 />
               </svg>
-              <span>Continue with Google</span>
+              <span>Sign in with Google</span>
             </button>
           </div>
 
@@ -131,27 +131,6 @@ export default function LoginPage() {
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
-            {isSignUp && (
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
-                >
-                  Full Name
-                </label>
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  required={isSignUp}
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
-                  placeholder="Enter your name"
-                />
-              </div>
-            )}
-
             <div>
               <label
                 htmlFor="email"
@@ -183,7 +162,7 @@ export default function LoginPage() {
                 id="password"
                 name="password"
                 type="password"
-                autoComplete={isSignUp ? "new-password" : "current-password"}
+                autoComplete="current-password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -191,11 +170,6 @@ export default function LoginPage() {
                 placeholder="Enter your password"
                 minLength={6}
               />
-              {isSignUp && (
-                <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                  Password must be at least 6 characters
-                </p>
-              )}
             </div>
 
             <div>
@@ -226,10 +200,10 @@ export default function LoginPage() {
                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                       ></path>
                     </svg>
-                    {isSignUp ? "Creating Account..." : "Signing In..."}
+                    Signing In...
                   </span>
                 ) : (
-                  isSignUp ? "Sign Up" : "Sign In"
+                  "Sign In"
                 )}
               </button>
             </div>
@@ -238,20 +212,13 @@ export default function LoginPage() {
           {/* Toggle between Sign In and Sign Up */}
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600 dark:text-gray-400">
-              {isSignUp ? "Already have an account? " : "Don't have an account? "}
-              <button
-                type="button"
-                onClick={() => {
-                  setIsSignUp(!isSignUp);
-                  setError("");
-                  setEmail("");
-                  setPassword("");
-                  setName("");
-                }}
+              Don't have an account?{" "}
+              <Link
+                href="/signup"
                 className="font-semibold text-primary hover:text-orange-600 dark:hover:text-orange-400 transition-colors"
               >
-                {isSignUp ? "Sign In" : "Sign Up"}
-              </button>
+                Sign Up
+              </Link>
             </p>
           </div>
 

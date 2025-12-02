@@ -15,6 +15,7 @@ const ProfileSchema = new mongoose.Schema(
             location: String,
             linkedin: String,
             portfolio: String,
+            photo: String,
         },
         summary: {
             bio: String,
@@ -58,11 +59,20 @@ const ProfileSchema = new mongoose.Schema(
             },
         ],
         preferences: {
+            jobType: String,
             roles: String,
             location: String,
             salary: String,
             noticePeriod: String,
         },
+        documents: [
+            {
+                name: String,
+                type: String,
+                date: String,
+                url: String,
+            }
+        ],
         extras: {
             strengths: String,
             hobbies: String,
