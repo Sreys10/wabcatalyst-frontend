@@ -249,6 +249,14 @@ const DashboardContent = () => {
         const filledFields = Object.values(fieldChecks).filter(Boolean).length;
         const score = totalFields > 0 ? Math.round((filledFields / totalFields) * 100) : 0;
 
+        console.log('Profile Completion Debug:', {
+            totalFields,
+            filledFields,
+            score,
+            fieldChecks,
+            missingItems
+        });
+
         setCompletionScore(score);
         setMissingSections(missingItems);
     };
