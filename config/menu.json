@@ -27,7 +27,7 @@
       "menu": [
         {
           "text": "Quick Start",
-          "url": "#"
+          "url": "/#workflow"
         }
       ]
     },
@@ -36,11 +36,11 @@
       "menu": [
         {
           "text": "Features",
-          "url": "#"
+          "url": "/#features"
         },
         {
           "text": "Platform",
-          "url": "#"
+          "url": "/#job-categories"
         }
       ]
     },
@@ -53,11 +53,11 @@
         },
         {
           "text": "Privacy Policy",
-          "url": "#"
+          "url": "/privacy-policy"
         },
         {
           "text": "Terms & Conditions",
-          "url": "#"
+          "url": "/terms-and-conditions"
         }
       ]
     }

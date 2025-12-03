@@ -573,15 +573,15 @@ const DashboardContent = () => {
                                                 <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">Quick Insights</span>
                                             </div>
                                             {atsReport.strengths && atsReport.strengths[0] && (
-                                                <div className="flex items-start gap-3 p-3 bg-green-50 dark:bg-green-900/10 rounded-lg border border-green-200 dark:border-green-800">
-                                                    <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
-                                                    <p className="text-xs text-gray-700 dark:text-gray-300 line-clamp-2">{atsReport.strengths[0]}</p>
+                                                <div className="flex items-start gap-3 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+                                                    <CheckCircle className="w-4 h-4 text-green-700 dark:text-green-400 mt-0.5 flex-shrink-0" />
+                                                    <p className="text-xs text-green-900 dark:text-green-100 line-clamp-2">{atsReport.strengths[0]}</p>
                                                 </div>
                                             )}
                                             {atsReport.weaknesses && atsReport.weaknesses[0] && (
-                                                <div className="flex items-start gap-3 p-3 bg-red-50 dark:bg-red-900/10 rounded-lg border border-red-200 dark:border-red-800">
-                                                    <AlertTriangle className="w-4 h-4 text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0" />
-                                                    <p className="text-xs text-gray-700 dark:text-gray-300 line-clamp-2">{atsReport.weaknesses[0]}</p>
+                                                <div className="flex items-start gap-3 p-3 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
+                                                    <AlertTriangle className="w-4 h-4 text-red-700 dark:text-red-400 mt-0.5 flex-shrink-0" />
+                                                    <p className="text-xs text-red-900 dark:text-red-100 line-clamp-2">{atsReport.weaknesses[0]}</p>
                                                 </div>
                                             )}
                                         </div>

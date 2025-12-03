@@ -115,5 +115,5 @@ call_to_action:
   button:
     enable: true
     label: "Contact Us"
-    link: "/login"
+    link: "/contact"
 ---

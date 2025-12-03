@@ -151,12 +151,11 @@ const Onboarding = () => {
                 <div className="space-y-2">
                     <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Full Name</label>
                     <div className="relative">
-                        <User className="absolute left-3 top-3.5 w-5 h-5 text-gray-400" />
                         <input
                             type="text"
                             value={formData.fullName}
                             onChange={(e) => handleInputChange('fullName', e.target.value)}
-                            className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-orange-500 outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-300 dark:placeholder-gray-600"
+                            className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-orange-500 outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-300 dark:placeholder-gray-600"
                             placeholder="Your full name"
                         />
                     </div>
@@ -167,7 +166,7 @@ const Onboarding = () => {
                         <select
                             value={formData.countryCode}
                             onChange={(e) => handleInputChange('countryCode', e.target.value)}
-                            className="w-28 px-2 py-3 rounded-xl border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-orange-500 outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white appearance-none text-center"
+                            className="w-28 px-5 py-3 rounded-xl border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-orange-500 outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white appearance-none text-center"
                         >
                             {countryCodes.map((c, idx) => (
                                 <option key={idx} value={c.code}>
@@ -180,31 +179,29 @@ const Onboarding = () => {
                             value={formData.phone}
                             onChange={(e) => handleInputChange('phone', e.target.value)}
                             className="flex-1 px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-orange-500 outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-300 dark:placeholder-gray-600"
-                            placeholder="123 456 7890"
+                            placeholder="Enter your phone number"
                         />
                     </div>
                 </div>
                 <div className="space-y-2">
                     <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Location</label>
                     <div className="relative">
-                        <MapPin className="absolute left-3 top-3.5 w-5 h-5 text-gray-400" />
                         <input
                             type="text"
                             value={formData.location}
                             onChange={(e) => handleInputChange('location', e.target.value)}
-                            className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-orange-500 outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-300 dark:placeholder-gray-600"
-                            placeholder="City, Country"
+                            className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-orange-500 outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-300 dark:placeholder-gray-600"
+                            placeholder="  City, Country"
                         />
                     </div>
                 </div>
                 <div className="space-y-2">
                     <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Highest Qualification</label>
                     <div className="relative">
-                        <GraduationCap className="absolute left-3 top-3.5 w-5 h-5 text-gray-400" />
                         <select
                             value={formData.highestQualification}
                             onChange={(e) => handleInputChange('highestQualification', e.target.value)}
-                            className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-orange-500 outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white appearance-none placeholder-gray-300 dark:placeholder-gray-600"
+                            className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-orange-500 outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white appearance-none placeholder-gray-300 dark:placeholder-gray-600"
                         >
                             <option value="">Select Qualification</option>
                             <option value="High School">High School</option>
@@ -218,12 +215,11 @@ const Onboarding = () => {
                 <div className="space-y-2">
                     <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Years of Experience</label>
                     <div className="relative">
-                        <Clock className="absolute left-3 top-3.5 w-5 h-5 text-gray-400" />
                         <input
                             type="text"
                             value={formData.yearsOfExperience}
                             onChange={(e) => handleInputChange('yearsOfExperience', e.target.value)}
-                            className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-orange-500 outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-300 dark:placeholder-gray-600"
+                            className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-orange-500 outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-300 dark:placeholder-gray-600"
                             placeholder="e.g. 2 years"
                         />
                     </div>
@@ -299,12 +295,11 @@ const Onboarding = () => {
                 <div className="space-y-2">
                     <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Expected Salary</label>
                     <div className="relative">
-                        <DollarSign className="absolute left-3 top-3.5 w-5 h-5 text-gray-400" />
                         <input
                             type="text"
                             value={formData.expectedSalary}
                             onChange={(e) => handleInputChange('expectedSalary', e.target.value)}
-                            className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-orange-500 outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-300 dark:placeholder-gray-600"
+                            className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-orange-500 outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-300 dark:placeholder-gray-600"
                             placeholder="e.g. 50k - 70k"
                         />
                     </div>
@@ -312,11 +307,10 @@ const Onboarding = () => {
                 <div className="space-y-2">
                     <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">Notice Period</label>
                     <div className="relative">
-                        <Calendar className="absolute left-3 top-3.5 w-5 h-5 text-gray-400" />
                         <select
                             value={formData.noticePeriod}
                             onChange={(e) => handleInputChange('noticePeriod', e.target.value)}
-                            className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-orange-500 outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white appearance-none placeholder-gray-300 dark:placeholder-gray-600"
+                            className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-600 focus:ring-2 focus:ring-orange-500 outline-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white appearance-none placeholder-gray-300 dark:placeholder-gray-600"
                         >
                             <option value="">Select Period</option>
                             <option value="Immediate">Immediate</option>
@@ -492,7 +486,15 @@ const Onboarding = () => {
                     <button
                         onClick={handleNext}
                         disabled={isSaving}
-                        className="flex items-center gap-2 px-8 py-3 bg-gray-900 dark:bg-orange-500 text-white rounded-xl font-bold hover:bg-gray-800 dark:hover:bg-orange-600 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+className="
+  flex items-center gap-2 px-5 py-3
+  bg-black text-white
+  dark:bg-orange dark:text-black
+  rounded-xl font-bold
+  transition-all
+  hover:bg-gray-800 dark:hover:bg-orange-600
+  shadow-lg hover:shadow-xl hover:-translate-y-0.5
+"
                     >
                         {isSaving ? 'Saving...' : currentStep === steps.length - 1 ? 'Finish' : 'Next'}
                         {!isSaving && <ChevronRight className="w-5 h-5" />}

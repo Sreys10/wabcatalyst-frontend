@@ -38,12 +38,12 @@ const Header = () => {
     return (
         <header className="h-20 bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 flex items-center justify-between px-6 md:px-8 transition-colors duration-200">
             <div className="flex-1 max-w-md mr-6">
-                <div className="relative flex items-center bg-gray-50 dark:bg-gray-700/50 rounded-xl px-4 py-2.5 focus-within:ring-2 focus-within:ring-orange-200 dark:focus-within:ring-orange-800 transition-all">
+                <div className="relative flex items-center bg-gray-100 dark:bg-gray-900 border border-transparent dark:border-gray-700 rounded-full px-4 py-2.5 focus-within:ring-2 focus-within:ring-orange-500/20 dark:focus-within:ring-orange-500/20 transition-all">
                     <Search className="w-5 h-5 text-gray-400 dark:text-gray-500 mr-3" />
                     <input
                         type="text"
                         placeholder="Search jobs, skills, companies"
-                        className="w-full bg-transparent border-none text-sm focus:outline-none text-gray-700 dark:text-gray-200 placeholder-gray-400 dark:placeholder-gray-500"
+                        className="w-full bg-transparent border-none text-sm focus:outline-none text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 appearance-none"
                     />
                 </div>
             </div>
@@ -117,7 +117,7 @@ const Header = () => {
                                     </button>
                                     <button
                                         onClick={() => {
-                                            // Sign out logic here if needed, or just close
+                                            signOut({ callbackUrl: '/login' });
                                             setIsProfileOpen(false);
                                         }}
                                         className="w-full flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-colors"
